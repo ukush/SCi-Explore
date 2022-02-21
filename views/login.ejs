@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="cp node_modules/leaflet/dist/leaflet.css public/css/leaflet.css">
+    
+    <title>Login page</title>
+</head>
+<body>
+
+    <!--We can access objects sent from the server by using the following syntax-->
+    <h1>Welcome <%= locals.text || 'Default' %> </h1>
+
+    <form id="login-form" method="POST" action="/login">
+        <label for="username">username:</label><br>
+        <input type="text" id="username" name="username" value=""><br>
+        <label for="password">password:</label><br>
+        <input type="text" id="password" name="password" value=""><br>
+        <label for="client_id">client Id:</label><br>
+        <input type="text" id="client_id" name="client_id" value=""><br>
+        <label for="client_secret">client secret:</label><br>
+        <input type="text" id="client_secret" name="client_secret" value=""><br><br>
+        <input type="submit" value="Submit">
+      </form>
+
+    <div id="map"></div>
+    <script src="map.js"></script>
+</body>
+</html>

@@ -7,12 +7,19 @@ const dotenv = require('dotenv')
 //import cors library
 const cors = require('cors')
 
+const request = require("request")
+
+const bodyparser = require("body-parser")
+
+let urlencodedparser = bodyparser.urlencoded( { extended: false })
 // save port to 
 //const PORT = process.env.PORT || 3000
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // set up a server by simply calling the express() method
 const app = express()
+
 
 // body parser
 //app.use(express.json)
@@ -51,13 +58,97 @@ app.get('/', (req, res) => {
     res.render('index', {text: 'To Sci Discover'})
 })
 
+var Authorization = function(data) {
+    // Create buffer object, specifying utf8 as encoding
+    let string = data.client_id+":"+data.client_secret
+    let bufferObj = Buffer.from(string, "utf8");
+
+    // Encode the Buffer as a base64 string
+    let base64String = bufferObj.toString("base64");
+    var options = {
+        'method': 'POST',
+        'url': 'https://hallam.sci-toolset.com/api/v1/token',
+        'headers': {
+          'Authorization': `Basic ${base64String}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        form: {
+          'username': data.username,
+          'password': data.password,
+          'scope': 'read write',
+          'client_id': data.client_id,
+          'client_secret': data.client_secret,
+          'grant_type': 'password'
+        }
+      };
+  
+    var req = request(options, function(error, response) {  
+        if (error) {
+            response.redirect('/login')
+            throw new Error(error);
+        } 
+        console.log("Response:");
+        console.log(JSON.parse(response.body));
+      });
+  };
+
+app.get("/login", (req, res) => {
+    app.set('view engine', 'ejs')
+    res.render('login', {text: 'login page'})
+})
+
+app.post('/login', urlencodedparser, (req, res) => {
+    app.set('view engine', 'ejs')
+    Authorization(req.body)
+    res.render('index', {text:'Login page testing'})
+    })
+
 // import the mission router
 const missionRouter =  require('./routes/missions')
+const req = require('express/lib/request')
+//const loginrouter = require('./routes/login')
 
 // link the routes from mission router
 app.use('/missions', missionRouter)
+
+//app.use('/login', loginrouter)
 
 
 // run server on port 3000
 app.listen(3000)
 //app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+/*
+var Authorization = function(data) {
+    // Create buffer object, specifying utf8 as encoding
+    let string = data.client_id+":"+data.client_secret
+    let bufferObj = Buffer.from(string, "utf8");
+
+    // Encode the Buffer as a base64 string
+    let base64String = bufferObj.toString("base64");
+    var options = {
+        'method': 'POST',
+        'url': 'https://hallam.sci-toolset.com/api/v1/token',
+        'headers': {
+          'Authorization': `Basic ${base64String}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        form: {
+          'username': data.username,
+          'password': data.password,
+          'scope': 'read write',
+          'client_id': data.client_id,
+          'client_secret': data.client_secret,
+          'grant_type': 'password'
+        }
+      };
+  
+    var req = request(options, function(error, response) {  
+        if (error) {
+            response.redirect('/login')
+            throw new Error(error);
+        } 
+        console.log("Response:");
+        console.log(JSON.parse(response.body));
+      });
+  };
+  */
