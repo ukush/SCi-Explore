@@ -1,10 +1,10 @@
 // import the express library
 const express = require('express')
-// import path library
+    // import path library
 const path = require('path')
-// import dotenv for global variables
+    // import dotenv for global variables
 const dotenv = require('dotenv')
-// import the layouts
+    // import the layouts
 const layouts = require("express-ejs-layouts")
 
 // save port to 
@@ -15,13 +15,10 @@ const app = express()
 
 // serve static files
 app.use(express.static('public'))
-app.use('/css', express.static(__dirname + 'public/stylesheets/css'))
-app.use('/js', express.static(__dirname + 'public/js'))
-app.use('/images', express.static(__dirname + 'public/images'))
 
 // use the ejs layouts
 app.use(layouts)
-//set up ejs view engine
+    //set up ejs view engine
 app.set('view engine', 'ejs')
 
 // main route
@@ -30,11 +27,11 @@ app.get('/', (req, res) => {
 })
 
 // import the mission router
-const missionRouter =  require('./routes/missions')
+const missionRouter = require('./routes/missions')
 
 // link the routes from mission router
 app.use('/missions', missionRouter)
 
 // run server on port 3000
 app.listen(3000)
-//app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    //app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
