@@ -1,35 +1,37 @@
-var map = new L.Map('leaflet', {
-    center: [53, -0.8],
-    zoom: 6,
-    cursor: true
-});
-
-//Creates an array of co-ordinates
-const pins = [
-    [51.5, -0.5],
-    [52.5, -0.1],
-    [53.5, -1],
-    [51, -2],
-    [52.5, -2.5],
-    [51.5, -3],
-    [55, -2]
+var addressPoints = [
+    [51.5, -0.5, "ID1"],
+    [52.5, -0.1, "ID2"],
+    [53.5, -1, "ID3"],
+    [51, -2, "ID4"],
+    [52.5, -2.5, "ID5"],
+    [51.5, -3, "ID6"],
+    [55, -2, "ID7"]
 ]
 
-pins.forEach((pin) => {
-    L.marker(pin).addTo(map).bindPopup("<b>Scene</b><br>Data here")
-});
+var map = L.map('map').setView([53, -8], 6);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+var markers = L.markerClusterGroup();
+
+for (var i = 0; i < addressPoints.length; i++) {
+    var a = addressPoints[i];
+    var title = a[2];
+    var marker = L.marker(new L.LatLng(a[0], a[1]), {
+        title: title
+    });
+    marker.bindPopup(title);
+    markers.addLayer(marker);
+    map.addLayer(markers);
+}
 
 //Use this to create all single map pin
 //var marker = L.marker([51.5, -3]).addTo(map);
 //marker.bindPopup("<b>Scene</b><br>") //add data we want
 
 //Use this to create  missions containing scenes
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
 
 var mission = {
     "type": "FeatureCollection",

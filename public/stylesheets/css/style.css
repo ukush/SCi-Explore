@@ -15,3 +15,7 @@ body,
 #leaflet {
     height: 100%;
 }
+
+#map {
+    height: 500px;
+}
