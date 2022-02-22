@@ -1,3 +1,6 @@
+
+// ------------------------ IMPORT DEPENDENCIES -----------------------//
+
 // import the express library
 const express = require('express')
 // import path library
@@ -6,18 +9,45 @@ const path = require('path')
 const dotenv = require('dotenv')
 // import the layouts
 const layouts = require("express-ejs-layouts")
+//import the session api
+const session = require('express-session')
+
+const request = require("request")
 
 // save port to 
 //const PORT = process.env.PORT || 3000
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+// ------------------------ CREATE EXPRESS APP -----------------------//
 
 // set up a server by simply calling the express() method
 const app = express()
 
-// serve static files
+// ------------------------ SESSION MANAGEMENT -----------------------//
+
+//const cookieExpiry = 74787 * 1000 // get milliseconds
+/*app.use(session({
+    secret: 'sci-toolset',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true, maxAge :  cookieExpiry}
+}))*/
+
+
+  // set the authentication details
+    const username = 'hallam'
+    const password = 'mypassword'
+    const clientId = ''
+    const secret = 'st'
+
+    // a variable to save a session
+    //var session;
+
+// ------------------------ SERVER STATIC FILES -----------------------//
+
 app.use(express.static('public'))
-app.use('/css', express.static(__dirname + 'public/stylesheets/css'))
-app.use('/js', express.static(__dirname + 'public/js'))
-app.use('/images', express.static(__dirname + 'public/images'))
+
+// ------------------------ SET UP VIEW ENGINE -----------------------//
 
 // use the ejs layouts
 app.use(layouts)
@@ -29,12 +59,16 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-// import the mission router
-const missionRouter =  require('./routes/missions')
+// ------------------------ IMPORT ROUTES -----------------------//
 
-// link the routes from mission router
+const loginrouter = require('./routes/login')
+app.use('/login', loginrouter)
+
+const missionRouter =  require('./routes/missions')
 app.use('/missions', missionRouter)
+
+
+// ------------------------ RUN EXPRESS SERVER -----------------------//
 
 // run server on port 3000
 app.listen(3000)
-//app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

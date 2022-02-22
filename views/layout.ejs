@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public\stylesheets\css\style.css">
-    <link rel="stylesheet" href="cp node_modules/leaflet/dist/leaflet.css public/css/leaflet.css">
-    
+    <link rel="stylesheet" href="../stylesheets/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=" " />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=" "></script>
+
     <title>Sci-Toolset Discover</title>
 </head>
+
 <body>
 
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="/">Sci Discover</a>
-          </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-               <li><a href="/missions"></a>Missions</li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container -->
-      </nav>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Sci Discover</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/missions"></a>Missions</li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
     <%- body %>
 
 
 </body>
+
 </html>
