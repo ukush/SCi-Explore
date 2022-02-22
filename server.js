@@ -33,7 +33,6 @@ const app = express()
 app.get('/', (req, res) => {
     // send an ok status code response back
     //res.sendStatus(304)
- 
     // still sends the status code but displays a custom message instead of default
     //res.status(200).send("Welcome!") 
     
@@ -62,10 +61,14 @@ const missionRouter =  require('./routes/missions')
 
 const loginrouter = require('./routes/login')
 
+const indexrouter = require('./routes/index')
+
 // link the routes from mission router
 app.use('/missions', missionRouter)
 
 app.use('/login', loginrouter)
+
+app.use('/index', indexrouter)
 
 
 // run server on port 3000

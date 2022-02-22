@@ -17,10 +17,11 @@ router.get('/', (req, res) => {
   res.render('login.ejs')
 })
 
-var Authorization = function(data) {
+function Authorization(data, res) {
   // Create buffer object, specifying utf8 as encoding
   let string = data.client_id+":"+data.client_secret
   let bufferObj = Buffer.from(string, "utf8");
+  var body;
 
   // Encode the Buffer as a base64 string
   let base64String = bufferObj.toString("base64");
@@ -41,21 +42,30 @@ var Authorization = function(data) {
       }
     };
 
-  var req = request(options, function(error, response) {  
+  request(options, function(error, response) {  
       if (error) {
-          res.render('login.ejs')
-          throw new Error(error);
+        throw new Error(error);
       } 
-      console.log("Response:");
-      console.log(JSON.parse(response.body));
-    });
-};
-
-router.post('/', urlencodedparser, (req, res) => {
-  //router.set('view engine', 'ejs')
-  Authorization(req.body)
-  res.render('index.ejs')
+      var data = JSON.parse(response.body)
+      res(data)
   })
+}
+
+
+router.post('/', urlencodedparser, (request, response) => {
+  //router.set('view engine', 'ejs')
+  Authorization(request.body, function(res) {
+    if(res.access_token!=null){
+      console.log("Response:");
+      console.log(res);
+      response.redirect('/index')
+      
+    } else {
+      console.log(res);
+      response.redirect('/')
+    }
+  })
+})
 
 
 module.exports = router;
