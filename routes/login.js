@@ -5,6 +5,7 @@ const router = express.Router()
 const bodyparser = require("body-parser")
 const request = require("request")
 const res = require("express/lib/response")
+const url = require('url'); 
 
 let urlencodedparser = bodyparser.urlencoded( { extended: false })
 
@@ -21,7 +22,6 @@ function Authorization(data, res) {
   // Create buffer object, specifying utf8 as encoding
   let string = data.client_id+":"+data.client_secret
   let bufferObj = Buffer.from(string, "utf8");
-  var body;
 
   // Encode the Buffer as a base64 string
   let base64String = bufferObj.toString("base64");
@@ -57,8 +57,8 @@ router.post('/', urlencodedparser, (request, response) => {
   Authorization(request.body, function(res) {
     if(res.access_token!=null){
       console.log("Response:");
-      console.log(res);
-      response.redirect('/index')
+      //console.log(res);
+      response.redirect(url.format({ pathname:"/index", query: res  }))
       
     } else {
       console.log(res);
