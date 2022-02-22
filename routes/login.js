@@ -58,11 +58,11 @@ router.post('/', urlencodedparser, (request, response) => {
     if(res.access_token!=null){
       console.log("Response:");
       //console.log(res);
-      response.redirect(url.format({ pathname:"/index", query: res  }))
+      response.redirect(url.format({ pathname:"/index", query: res, format: 'json' }))
       
     } else {
       console.log(res);
-      response.redirect('/')
+      response.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
     }
   })
 })

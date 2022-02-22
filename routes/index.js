@@ -10,6 +10,9 @@ const bodyparser = require("body-parser")
 
 let urlencodedparser = bodyparser.urlencoded( { extended: false })
 
+let metadata;
+let mission_footprints;
+
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
 // use the router in the same way we use the app in the server.js
@@ -30,28 +33,33 @@ function apiGet(path, access_token, res) {
     })
 }
 
-router.get('/', urlencodedparser,(req, res) => {
-    let userResponse = req.query
+router.get('/', urlencodedparser,(request, response) => {
+    let userResponse = request.query
     let access_token = userResponse.access_token
     let token_type = userResponse.token_type
     let expires_in = userResponse.expires_in
-    let missionscenedata = null;
+    //this function collects all the mission and scene ID's and stores them locally
     apiGet("/search", access_token, function(res) {
         //console.log(res)
-        missionscenedata = res.results
-        console.log(missionscenedata)
+        var missionscenedata = res.results
+        //console.log(missionscenedata)
+        missionscenedata.forEach(element => {
+            var mission_ID = element.missionId
+            var scene_ID = element.sceneId
+            //this function returns the coordinates for the Leaflet api and stores them inside the 
+            //mission_footprints array to be accessed once all data is loaded
+            apiGet(`/${mission_ID}/footprint`, access_token, function(res) {
+                mission_footprints = res
+                //console.log(mission_footprints)
+            })
+            //this function returns all metadata relevent to the scene and mission ID
+            apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
+                metadata = res
+                console.log(metadata)
+        })
+        })
     })
-    /*
-    missionscenedata.array.forEach(element => {
-        var mission_ID = element[0]
-        var scene_ID = element[1]
-        console.log(`\nmID:${mission_ID}, sID:${scene_ID}\n`)
-        //apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
-            // stuff here
-        //})
-    });
-    */
-    res.render('index.ejs')
+    response.render('index.ejs')
 })
 
 
