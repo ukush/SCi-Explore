@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="cp node_modules/leaflet/dist/leaflet.css public/css/leaflet.css">
-    
-    <title>Document</title>
-</head>
-<body>
+<h1>Product Coverage Viewer</h1>
 
-    <!--We can access objects sent from the server by using the following syntax-->
-    <h1>Welcome <%= locals.text || 'Default' %> </h1>
+<!--The map will go here-->
+<div id="map"></div>
 
-
-    <div id="map"></div>
-    <script src="map.js"></script>
-</body>
-</html>
+<script src="../map.js"></script>
+<script src="../api.js"></script>
