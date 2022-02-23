@@ -53,11 +53,9 @@ function Authorization(data, res) {
 
 
 router.post('/', urlencodedparser, (request, response) => {
-  //router.set('view engine', 'ejs')
   Authorization(request.body, function(res) {
     if(res.access_token!=null){
-      console.log("Response:");
-      //console.log(res);
+      console.log(res);
       response.redirect(url.format({ pathname:"/index", query: res, format: 'json' }))
       
     } else {

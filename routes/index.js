@@ -29,7 +29,7 @@ function apiGet(path, access_token, res) {
         res(data)
     })
 }
-function runsearch(access_token, callback1, callback2, callback3) {
+function runsearch(access_token, callback1, callback2, callback3, render) {
     apiGet("/search", access_token, function(res) {
         callback1(res)
         var array = res.results
@@ -43,6 +43,7 @@ function runsearch(access_token, callback1, callback2, callback3) {
             })
             apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
                 callback3(res)
+                render()
                 })
         })
     })
@@ -50,20 +51,22 @@ function runsearch(access_token, callback1, callback2, callback3) {
 
 router.get('/', urlencodedparser,(request, res) => {
     let metadata = 'null';
-    let mission_footprints = 'null';
-    let missionscenedata = 'null';
+    let mission_footprints;
+    let missionscenedata;
     let access_token = request.query.access_token
     runsearch(access_token,  
         function(callback1) {
         metadata = callback1
     }, function(callback2) {
         mission_footprints = callback2
+        //console.log(callback2)
     }, function(callback3) {
-        missionscenedata = callback3
+        //console.log(callback3)
+        missionscenedata = {callback3}
     }, function() {
-        //res.render('index.ejs', { metadata: metadata, mission_footprints: mission_footprints
-        //    , missionscenedata: missionscenedata })
-    }) 
+        let data = { metadata: metadata, footprint: mission_footprints, scene: missionscenedata }
+        res.render('index.ejs', { data: data })
+    })
 })
 
 
