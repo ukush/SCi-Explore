@@ -8,7 +8,7 @@ var addressPoints = [
     [55, -2, "ID7"]
 ]
 
-var map = L.map('map').setView([53, -8], 6);
+var map = L.map('map').setView([53, -4], 6);
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

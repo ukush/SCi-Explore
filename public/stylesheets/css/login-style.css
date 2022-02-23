@@ -10,6 +10,8 @@
     form img {
         width: "90";
         height: "55";
+        background-color: black;
+        padding: 10px;
     }
     
     .form-signin {
