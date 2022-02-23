@@ -10,9 +10,6 @@ const bodyparser = require("body-parser")
 
 let urlencodedparser = bodyparser.urlencoded( { extended: false })
 
-let metadata;
-let mission_footprints;
-
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
 // use the router in the same way we use the app in the server.js
@@ -32,34 +29,41 @@ function apiGet(path, access_token, res) {
         res(data)
     })
 }
-
-router.get('/', urlencodedparser,(request, response) => {
-    let userResponse = request.query
-    let access_token = userResponse.access_token
-    let token_type = userResponse.token_type
-    let expires_in = userResponse.expires_in
-    //this function collects all the mission and scene ID's and stores them locally
+function runsearch(access_token, callback1, callback2, callback3) {
     apiGet("/search", access_token, function(res) {
-        //console.log(res)
-        var missionscenedata = res.results
-        //console.log(missionscenedata)
-        missionscenedata.forEach(element => {
+        callback1(res)
+        var array = res.results
+        array.forEach(element => {
             var mission_ID = element.missionId
             var scene_ID = element.sceneId
             //this function returns the coordinates for the Leaflet api and stores them inside the 
             //mission_footprints array to be accessed once all data is loaded
             apiGet(`/${mission_ID}/footprint`, access_token, function(res) {
-                mission_footprints = res
-                //console.log(mission_footprints)
+                callback2(res)
             })
-            //this function returns all metadata relevent to the scene and mission ID
             apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
-                metadata = res
-                console.log(metadata)
-        })
+                callback3(res)
+                })
         })
     })
-    response.render('index.ejs')
+}
+
+router.get('/', urlencodedparser,(request, res) => {
+    let metadata = 'null';
+    let mission_footprints = 'null';
+    let missionscenedata = 'null';
+    let access_token = request.query.access_token
+    runsearch(access_token,  
+        function(callback1) {
+        metadata = callback1
+    }, function(callback2) {
+        mission_footprints = callback2
+    }, function(callback3) {
+        missionscenedata = callback3
+    }, function() {
+        //res.render('index.ejs', { metadata: metadata, mission_footprints: mission_footprints
+        //    , missionscenedata: missionscenedata })
+    }) 
 })
 
 
