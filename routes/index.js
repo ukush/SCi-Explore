@@ -59,7 +59,7 @@ router.get('/', urlencodedparser,(request, response) => {
         })
         })
     })
-    response.render('index.ejs')
+    response.render('index')
 })
 
 

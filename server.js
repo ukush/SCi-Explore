@@ -13,6 +13,8 @@ const session = require('express-session')
 
 const request = require("request")
 
+const uuid = require('uuid')
+
 // save port to 
 //const PORT = process.env.PORT || 3000
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -24,23 +26,14 @@ const app = express()
 
 // ------------------------ SESSION MANAGEMENT -----------------------//
 
-//const cookieExpiry = 74787 * 1000 // get milliseconds
-/*app.use(session({
-    secret: 'sci-toolset',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true, maxAge :  cookieExpiry}
-}))*/
-
-
-  // set the authentication details
-    const username = 'hallam'
-    const password = 'mypassword'
-    const clientId = ''
-    const secret = 'st'
-
-    // a variable to save a session
-    //var session;
+const cookieExpiry = 74787 * 1000 // get milliseconds
+// Make every request need a session/cookie
+app.use(session({
+    secret:'sci-toolset',
+    resave: false, // option to resave 
+    saveUninitialized: false, // doesn't save unless changed
+    cookie: {maxAge: 3000}
+}))
 
 // ------------------------ SERVER STATIC FILES -----------------------//
 
@@ -55,7 +48,10 @@ app.set('view engine', 'ejs')
 
 // main route
 app.get('/', (req, res) => {
-    res.render('index')
+    if (req.session.loggedIn)
+        res.redirect('login')
+    else
+        res.render('index')
 })
 
 // ------------------------ IMPORT ROUTES -----------------------//
@@ -67,6 +63,7 @@ const missionRouter =  require('./routes/missions')
 app.use('/missions', missionRouter)
 
 const indexrouter = require('./routes/index')
+const e = require('express')
 app.use('/index', indexrouter)
 
 
