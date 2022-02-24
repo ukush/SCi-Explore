@@ -34,7 +34,7 @@ app.use(session({
     secret:'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
     saveUninitialized: false, // doesn't save unless changed
-    cookie: {maxAge: 30000000}
+    cookie: {maxAge: cookieExpiry}
 }))
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//

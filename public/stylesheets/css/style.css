@@ -103,3 +103,15 @@
     .btn-secondary {
         color: white;
     }
+
+    .rightnav .search-bar {
+        float: left;
+        margin-top: 10px;
+        width: 280px;
+    }
+
+    #search-field {
+        width: 100%;
+        font-family: Calibri;
+    }
+
