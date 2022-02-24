@@ -15,6 +15,8 @@ const request = require("request")
 
 const uuid = require('uuid')
 
+const url = require('url')
+
 // save port to 
 //const PORT = process.env.PORT || 3000
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -44,10 +46,14 @@ app.set('view engine', 'ejs')
 
 // main route
 app.get('/', (req, res) => {
-    if (req.session.loggedIn)
-        res.redirect('login')
-    else
+    console.log("SessionID: " + req.sessionID);
+    console.log('Is session authenticated: ' + req.session.authenticated);
+    if (!(req.session.authenticated)) {
+        res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
+    }
+    else {
         res.render('index')
+    }   
 })
 
 // ------------------------ IMPORT ROUTES -----------------------//
