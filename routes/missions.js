@@ -6,6 +6,7 @@
 // import express
 const express = require('express')
 
+
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
 // use the router in the same way we use the app in the server.js
@@ -17,7 +18,7 @@ router.get('/', (req, res) => {
 
 router.get('/create', (req, res) => {
     res.render('createmission.ejs')
-    
+
 })
 
 

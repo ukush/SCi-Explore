@@ -2,13 +2,13 @@
 
 // import the express library
 const express = require('express')
-// import path library
+    // import path library
 const path = require('path')
-// import dotenv for global variables
+    // import dotenv for global variables
 const dotenv = require('dotenv')
-// import the layouts
+    // import the layouts
 const layouts = require("express-ejs-layouts")
-//import the session api
+    //import the session api
 const session = require('express-session')
 
 const request = require("request")
@@ -33,14 +33,14 @@ const app = express()
 }))*/
 
 
-  // set the authentication details
-    const username = 'hallam'
-    const password = 'mypassword'
-    const clientId = ''
-    const secret = 'st'
+// set the authentication details
+const username = 'hallam'
+const password = 'mypassword'
+const clientId = ''
+const secret = 'st'
 
-    // a variable to save a session
-    //var session;
+// a variable to save a session
+//var session;
 
 // ------------------------ SERVER STATIC FILES -----------------------//
 
@@ -50,7 +50,7 @@ app.use(express.static('public'));
 
 // use the ejs layouts
 app.use(layouts)
-//set up ejs view engine
+    //set up ejs view engine
 app.set('view engine', 'ejs')
 
 // main route
@@ -63,7 +63,7 @@ app.get('/', (req, res) => {
 const loginrouter = require('./routes/login')
 app.use('/login', loginrouter)
 
-const missionRouter =  require('./routes/missions')
+const missionRouter = require('./routes/missions')
 app.use('/missions', missionRouter)
 
 const indexrouter = require('./routes/index')

@@ -1,70 +1,105 @@
-/*NAVBAR*/
-
-
-/* Add a black background color to the top navigation */
-
-.topnav {
-    background-color: black;
-    overflow: hidden;
-    display: flex;
-    height: 50px;
-    color: white;
-}
-
-
-/* Style the links inside the navigation bar */
-
-.topnav a {
-    background-color: white;
-    float: left;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-
-/* Add a color to the active/current link */
-
-.topnav a.active {
-    background-color: #04AA6D;
-    color: white;
-}
-
-.leftnav {
-    text-align: left;
-    padding: 15px;
-    margin-left: 0;
-    font-weight: bold;
-}
-
-.logo {
-    margin: auto;
-}
-
-.rightnav {
-    margin-left: auto;
-    margin-right: 0;
-}
-
-.rightnav img {
-    width: 25px;
-    height: 25px;
-}
-
-body {
-    background-color: #f5f5f5;
-    font-size: 20px;
-    font-family: 'Calibri';
-    margin: 0 auto;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-#map {
-    height: 700px;
-}
+    /*NAVBAR*/
+    
+    .topnav {
+        background-color: #343a40;
+        overflow: hidden;
+        display: flex;
+        height: 50px;
+        color: white;
+    }
+    
+    .topnav a {
+        float: left;
+        text-align: center;
+        margin-top: 0px;
+        height: 100%;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .topnav a:hover {
+        text-decoration: none;
+    }
+    
+    .leftnav {
+        font-weight: bold;
+        width: 12%;
+    }
+    
+    .leftnav a {
+        padding: 12px 16px;
+    }
+    
+    .leftnav a:hover {
+        color: white;
+    }
+    
+    .centernav a,
+    .rightnav a {
+        font-size: 17px;
+        padding: 12px 16px;
+    }
+    
+    .centernav a:hover,
+    .rightnav a:hover {
+        color: #343a40;
+        background-color: white;
+    }
+    
+    .rightnav {
+        margin-left: auto;
+        margin-right: 0;
+        color: white;
+    }
+    
+    .rightnav img {
+        width: 25px;
+        height: 25px;
+    }
+    
+    body {
+        background-color: #f5f5f5;
+        font-size: 20px;
+        font-family: 'Calibri';
+        margin: 0 auto;
+    }
+    
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    #map {
+        height: 700px;
+    }
+    
+    #minimap {
+        height: 400px;
+        width: 70%;
+        float: left;
+    }
+    
+    #metadata {
+        width: 30%;
+        height: 675px;
+        float: right;
+    }
+    
+    #results {
+        width: 70%;
+        height: 250px;
+        float: left;
+    }
+    
+    thead {
+        font-size: 16px;
+    }
+    
+    tbody {
+        font-size: 12px;
+    }
+    
+    .btn-secondary {
+        color: white;
+    }
