@@ -29,15 +29,11 @@ const app = express()
 const cookieExpiry = 74787 * 1000 // get milliseconds
 // Make every request need a session/cookie
 app.use(session({
-    secret:'sci-toolset',
+    secret:'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
     saveUninitialized: false, // doesn't save unless changed
-    cookie: {maxAge: 3000}
+    cookie: {maxAge: 30000000}
 }))
-
-// ------------------------ SERVER STATIC FILES -----------------------//
-
-app.use(express.static('public'));
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//
 
@@ -65,6 +61,13 @@ app.use('/missions', missionRouter)
 const indexrouter = require('./routes/index')
 const e = require('express')
 app.use('/index', indexrouter)
+
+
+
+// ------------------------ SERVER STATIC FILES -----------------------//
+
+// Allow the app to serve static files such as css
+app.use(express.static('public'));
 
 
 // ------------------------ RUN EXPRESS SERVER -----------------------//

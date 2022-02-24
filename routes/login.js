@@ -57,6 +57,7 @@ router.post('/', urlencodedparser, (request, response) => {
       console.log('Is session authenticated: ' + request.session.authenticated);
       console.log('SessionID: ' + request.sessionID)
       console.log("Session Username: " + request.session.username);
+      console.log("Cookie Expiry: " + request.session.cookie.maxAge);
       response.redirect(url.format({ pathname: "/index", query: res, format: 'json' }))
     } else {
       console.log(res)
