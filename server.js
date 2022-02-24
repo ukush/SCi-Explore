@@ -2,13 +2,13 @@
 
 // import the express library
 const express = require('express')
-// import path library
+    // import path library
 const path = require('path')
-// import dotenv for global variables
+    // import dotenv for global variables
 const dotenv = require('dotenv')
-// import the layouts
+    // import the layouts
 const layouts = require("express-ejs-layouts")
-//import the session api
+    //import the session api
 const session = require('express-session')
 
 const request = require("request")
@@ -29,19 +29,19 @@ const app = express()
 // ------------------------ SESSION MANAGEMENT -----------------------//
 
 const cookieExpiry = 74787 * 1000 // get milliseconds
-// Make every request need a session/cookie
+    // Make every request need a session/cookie
 app.use(session({
-    secret:'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
+    secret: 'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
     saveUninitialized: false, // doesn't save unless changed
-    cookie: {maxAge: cookieExpiry}
+    cookie: {maxAge: cookieExpiry }
 }))
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//
 
 // use the ejs layouts
 app.use(layouts)
-//set up ejs view engine
+    //set up ejs view engine
 app.set('view engine', 'ejs')
 
 // main route
@@ -49,11 +49,10 @@ app.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
     if (!(req.session.authenticated)) {
-        res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
-    }
-    else {
+        res.redirect(url.format({ pathname: "/login", query: res, format: 'json' }))
+    } else {
         res.render('index')
-    }   
+    }
 })
 
 // ------------------------ IMPORT ROUTES -----------------------//
@@ -61,7 +60,7 @@ app.get('/', (req, res) => {
 const loginrouter = require('./routes/login')
 app.use('/login', loginrouter)
 
-const missionRouter =  require('./routes/missions')
+const missionRouter = require('./routes/missions')
 app.use('/missions', missionRouter)
 
 const indexrouter = require('./routes/index')
