@@ -40,33 +40,56 @@ function runsearch(access_token, callback1, callback2, callback3, render) {
             //mission_footprints array to be accessed once all data is loaded
             apiGet(`/${mission_ID}/footprint`, access_token, function(res) {
                 callback2(res)
+                apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
+                    callback3(res)
+                    render()
+                    })
             })
-            apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
-                callback3(res)
-                render()
-                })
         })
     })
 }
 
 router.get('/', urlencodedparser,(request, res) => {
-    let metadata = 'null';
-    let mission_footprints;
-    let missionscenedata;
     let access_token = request.query.access_token
-    runsearch(access_token,  
-        function(callback1) {
-        metadata = callback1
-    }, function(callback2) {
-        mission_footprints = callback2
-        //console.log(callback2)
-    }, function(callback3) {
-        //console.log(callback3)
-        missionscenedata = {callback3}
-    }, function() {
-        let data = { metadata: metadata, footprint: mission_footprints, scene: missionscenedata }
-        res.render('index.ejs', { data: data })
-    })
+    let data = Promise.all([
+        new Promise(resolve =>
+            apiGet("/search", access_token, function(res) {
+                resolve(res)
+            })),
+        new Promise(resolve =>
+            apiGet("/search", access_token, function(res) {
+                var array = res.results
+                array.forEach(element => {
+                    var mission_ID = element.missionId
+                    //this function returns the coordinates for the Leaflet api and stores them inside the 
+                    //mission_footprints array to be accessed once all data is loaded
+                    apiGet(`/${mission_ID}/footprint`, access_token, function(res) {
+                        resolve(res)
+                    })
+                })
+            })),
+        new Promise(resolve =>
+            apiGet("/search", access_token, function(res) {
+                var array = res.results
+                array.forEach(element => {
+                    var mission_ID = element.missionId
+                    var scene_ID = element.sceneId
+                    //this function returns the coordinates for the Leaflet api and stores them inside the 
+                    //mission_footprints array to be accessed once all data is loaded
+                    apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
+                        resolve(res) 
+                    })
+                })
+            }))
+    ])
+    data.then(
+        function(data){
+            res.render('index.ejs', { data: data })
+        },
+        function(error){
+            console.log(error)
+        }
+    )
 })
 
 
