@@ -1,4 +1,4 @@
-    /*NAVBAR*/
+ /*NAVBAR*/
     
     .topnav {
         background-color: #343a40;
@@ -98,6 +98,7 @@
     
     tbody {
         font-size: 12px;
+      font-family: sans-serif;
     }
     
     .btn-secondary {
