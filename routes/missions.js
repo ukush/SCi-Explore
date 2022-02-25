@@ -5,6 +5,7 @@
 
 // import express
 const express = require('express')
+const url = require('url'); 
 
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
@@ -12,11 +13,26 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.render('missions.ejs')
+    console.log("SessionID: " + req.sessionID);
+    console.log('Is session authenticated: ' + req.session.authenticated);
+    if (!(req.session.authenticated)) {
+        res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
+    }
+    else {
+        res.render('missions')
+    }   
+    
 })
 
 router.get('/create', (req, res) => {
-    res.render('createmission.ejs')
+    console.log("SessionID: " + req.sessionID);
+    console.log('Is session authenticated: ' + req.session.authenticated);
+    if (!(req.session.authenticated)) {
+        res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
+    }
+    else {
+        res.render('createmission')
+    }   
     
 })
 

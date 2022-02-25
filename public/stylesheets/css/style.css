@@ -1,7 +1,72 @@
+html {
+    height: 100%;
+}
+
 body {
     background-color: #f5f5f5;
     font-size: 20px;
     font-family: 'Calibri';
+    margin: 0 auto;
+}
+
+
+/*NAVBAR*/
+
+.topnav {
+    background-color: #343a40;
+    overflow: hidden;
+    display: flex;
+    height: 50px;
+    color: white;
+}
+
+.topnav a {
+    float: left;
+    text-align: center;
+    margin-top: 0px;
+    height: 100%;
+    font-weight: bold;
+    color: white;
+}
+
+.topnav a:hover {
+    text-decoration: none;
+}
+
+.leftnav {
+    font-weight: bold;
+    width: 12%;
+}
+
+.leftnav a {
+    padding: 12px 16px;
+}
+
+.leftnav a:hover {
+    color: white;
+}
+
+.centernav a,
+.rightnav a {
+    font-size: 17px;
+    padding: 12px 16px;
+}
+
+.centernav a:hover,
+.rightnav a:hover {
+    color: #343a40;
+    background-color: white;
+}
+
+.rightnav {
+    margin-left: auto;
+    margin-right: 0;
+    color: white;
+}
+
+.rightnav img {
+    width: 25px;
+    height: 25px;
 }
 
 ul {
@@ -10,12 +75,55 @@ ul {
     padding: 0;
 }
 
-html,
-body,
-#leaflet {
-    height: 100%;
+#map {
+    height: 700px;
 }
 
-#map {
-    height: 500px;
+#minimap {
+    height: 400px;
+    width: 70%;
+    float: left;
+}
+
+#metadata {
+    width: 30%;
+    height: 675px;
+    float: right;
+}
+
+#results {
+    width: 70%;
+    height: 250px;
+    float: left;
+}
+
+thead {
+    font-size: 16px;
+}
+
+tbody {
+    font-size: 12px;
+}
+
+.btn-secondary {
+    color: white;
+}
+
+.rightnav .search-bar {
+    float: left;
+    margin-top: 10px;
+    width: 280px;
+}
+
+#search-field {
+    width: 100%;
+    font-family: Calibri;
+}
+
+.highlight {
+    background-color: lightskyblue;
+}
+
+#miss tr {
+    cursor: pointer;
 }

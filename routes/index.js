@@ -1,5 +1,5 @@
 /**
- * All routes dealing with missions are kept in a single file
+ * All routes dealing with similar pages are kept in a single file
  * A router is basically a little mini application that runs along side the main app
  */
 
@@ -7,6 +7,7 @@
 const express = require('express')
 const request = require('request')
 const bodyparser = require("body-parser")
+const url = require('url')
 
 let urlencodedparser = bodyparser.urlencoded( { extended: false })
 
