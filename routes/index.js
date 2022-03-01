@@ -16,7 +16,7 @@ let urlencodedparser = bodyparser.urlencoded( { extended: false })
 // use the router in the same way we use the app in the server.js
 const router = express.Router()
 
-function apiGet(path, access_token, res) {
+function apiGet(path, access_token, response) {
     var options = {
         'method': 'GET',
         'url': `https://hallam.sci-toolset.com/discover/api/v1/missionfeed/missions${path}`,
@@ -24,68 +24,70 @@ function apiGet(path, access_token, res) {
           'Authorization': `Bearer ${access_token}`,
         }
     }
-    request(options, function(error, response) {
+    request(options, function(error, res) {
         if (error) throw new Error(error);
-        var data = JSON.parse(response.body)
-        res(data)
-    })
-}
-function runsearch(access_token, callback1, callback2, callback3, render) {
-    apiGet("/search", access_token, function(res) {
-        callback1(res)
-        var array = res.results
-        array.forEach(element => {
-            var mission_ID = element.missionId
-            var scene_ID = element.sceneId
-            //this function returns the coordinates for the Leaflet api and stores them inside the 
-            //mission_footprints array to be accessed once all data is loaded
-            apiGet(`/${mission_ID}/footprint`, access_token, function(res) {
-                callback2(res)
-                apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
-                    callback3(res)
-                    render()
-                    })
-            })
-        })
+        var data = JSON.parse(res.body)
+        response(data)
     })
 }
 
-router.get('/', urlencodedparser,(request, res) => {
+//when user detailed have been validated coorectly and deemed valid this URL get is called
+//This collects all the data from the API
+
+
+
+router.get('/', urlencodedparser,(request, response) => {
     let access_token = request.query.access_token
-    let data = Promise.all([
+    let rawdata = Promise.all([
         new Promise(resolve =>
-            apiGet("/search", access_token, function(res) {
-                resolve(res)
+            //this apiGet call collects all mission Id's and scene Id's from the api
+            //these are required to collect all associated meta data futher down the program
+            apiGet("/search", access_token, function(callback) {
+                let array = callback.results
+                let struct_array = [{}];
+                for (let i=0;i<array.length;i++) {
+                    let missionId = array[i].missionId
+                    let sceneId = array[i].sceneId
+                    let object = { missionId: missionId, sceneId: sceneId }
+                    for (let j=0;j<struct_array.length;j++) {
+                        if (object.missionId != struct_array[j].missionId) {
+                            struct_array.push(object)
+                            console.log(struct_array)
+                            resolve(struct_array)
+                        } else if (object.missionId == struct_array[j].missionId && struct_array[j].sceneId ) {
+                            break
+                        }
+                    }
+                }
             })),
         new Promise(resolve =>
-            apiGet("/search", access_token, function(res) {
-                var array = res.results
+            apiGet("/search", access_token, function(callback) {
+                var array = callback.results
                 array.forEach(element => {
                     var mission_ID = element.missionId
-                    //this function returns the coordinates for the Leaflet api and stores them inside the 
-                    //mission_footprints array to be accessed once all data is loaded
-                    apiGet(`/${mission_ID}/footprint`, access_token, function(res) {
-                        resolve(res)
+                    //this apiGet call returns the coordinates for the Leaflet api and stores them inside the 
+                    //data array to be accessed once all data is loaded
+                    apiGet(`/${mission_ID}/footprint`, access_token, function(callback) {
+                        resolve(callback)
                     })
                 })
             })),
         new Promise(resolve =>
-            apiGet("/search", access_token, function(res) {
-                var array = res.results
+            apiGet("/search", access_token, function(callback) {
+                var array = callback.results
                 array.forEach(element => {
                     var mission_ID = element.missionId
                     var scene_ID = element.sceneId
-                    //this function returns the coordinates for the Leaflet api and stores them inside the 
-                    //mission_footprints array to be accessed once all data is loaded
-                    apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(res) {
-                        resolve(res) 
+                    //this apiGet call collects all the meta data relevent to the inputted mission->scene
+                    apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(callback) {
+                        resolve(callback) 
                     })
                 })
             }))
     ])
-    data.then(
-        function(data){
-            res.render('index.ejs', { data: data })
+    rawdata.then(
+        function(rawdata){
+            response.render('index.ejs', { data: rawdata })
         },
         function(error){
             console.log(error)
