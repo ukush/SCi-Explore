@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "devStart": "nodemon server.js",
-    "build": "browserify map.js -o map.js & cp node_modules/leaflet/dist/leaflet.css public/css/leaflet.css"
+    "devStart": "nodemon server.js"
   },
   "keywords": [],
   "author": "",
