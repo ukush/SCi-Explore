@@ -18,7 +18,7 @@ const uuid = require('uuid')
 const url = require('url')
 
 // save port to 
-//const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // ------------------------ CREATE EXPRESS APP -----------------------//
@@ -78,4 +78,4 @@ app.use(express.static('public'));
 // ------------------------ RUN EXPRESS SERVER -----------------------//
 
 // run server on port 3000
-app.listen(3000)
+app.listen(PORT)
