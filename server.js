@@ -33,7 +33,7 @@ const cookieExpiry = 74787 * 1000 // get milliseconds
 app.use(session({
     secret: 'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
-    saveUninitialized: false, // doesn't save unless changed
+    saveUninitialized: false,
     cookie: {maxAge: cookieExpiry }
 }))
 
