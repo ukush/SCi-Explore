@@ -67,12 +67,16 @@ const indexrouter = require('./routes/index')
 const e = require('express')
 app.use('/index', indexrouter)
 
-
-
 // ------------------------ SERVER STATIC FILES -----------------------//
 
 // Allow the app to serve static files such as css
 app.use(express.static('public'));
+
+
+// the 404 route (always goes at the end!)
+app.get('*', function(req, res) {
+    res.status(404).render('404')
+})
 
 
 // ------------------------ RUN EXPRESS SERVER -----------------------//
