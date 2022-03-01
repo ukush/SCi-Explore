@@ -85,6 +85,7 @@ router.get('/', urlencodedparser,(request, res) => {
     ])
     data.then(
         function(data){
+            console.log(data)
             res.render('index.ejs', { data: data })
         },
         function(error){
@@ -92,8 +93,6 @@ router.get('/', urlencodedparser,(request, res) => {
         }
     )
 })
-
-
 
 // export this router so we can use it in the server.js file
 module.exports = router
