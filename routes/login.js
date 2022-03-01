@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 function Authorization(data, res) {
   // Create buffer object, specifying utf8 as encoding
-  let string = data.client_id+":"+data.client_secret
+  let string = 'sci-toolset'+":"+'st'
   let bufferObj = Buffer.from(string, "utf8");
   
   // Encode the Buffer as a base64 string
