@@ -49,15 +49,20 @@ function Authorization(data, res) {
 router.post('/', urlencodedparser, (request, response) => {
   Authorization(request.body, function(res) {
     if(res.access_token!=null){
+
       // create a session
       // set session username
       request.session.username = request.body.username
       // authenticate the session
       request.session.authenticated = true
+
+      // console log session information
       console.log('Is session authenticated: ' + request.session.authenticated);
       console.log('SessionID: ' + request.sessionID)
       console.log("Session Username: " + request.session.username);
       console.log("Cookie Expiry: " + request.session.cookie.maxAge);
+
+      // direct to index page
       response.redirect(url.format({ pathname: "/index", query: res, format: 'json' }))
     } else {
       console.log(res)
