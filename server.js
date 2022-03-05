@@ -65,8 +65,10 @@ const missionRouter = require('./routes/missions')
 app.use('/missions', missionRouter)
 
 const indexrouter = require('./routes/index')
-const e = require('express')
 app.use('/index', indexrouter)
+
+const logoutrouter = require('./routes/logout')
+app.use('/logout', logoutrouter)
 
 // ------------------------ SERVER STATIC FILES -----------------------//
 

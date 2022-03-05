@@ -12,6 +12,7 @@ const url = require('url');
 // use the router in the same way we use the app in the server.js
 const router = express.Router()
 
+
 router.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
