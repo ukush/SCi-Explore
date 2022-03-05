@@ -5,6 +5,8 @@ const request = require("request")
 const res = require("express/lib/response")
 const url = require('url'); 
 const session = require("express-session")
+const { dirname } = require("path")
+const path = require("path")
 
 
 let urlencodedparser = bodyparser.urlencoded( { extended: false })
@@ -31,8 +33,8 @@ function Authorization(data, res) {
         'username': data.username,
         'password': data.password,
         'scope': 'read write',
-        'client_id': data.client_id,
-        'client_secret': data.client_secret,
+        'client_id': 'sci-toolset',
+        'client_secret': 'st',
         'grant_type': 'password'
       }
     };
@@ -64,6 +66,7 @@ router.post('/', urlencodedparser, (request, response) => {
 
       // direct to index page
       response.redirect(url.format({ pathname: "/index", query: res, format: 'json' }))
+  
     } else {
       console.log(res)
       response.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))

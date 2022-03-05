@@ -85,7 +85,7 @@ router.get('/', urlencodedparser,(request, res) => {
     ])
     data.then(
         function(data){
-            res.render('index.ejs', { data: data })
+            res.render('index', { data: data })
         },
         function(error){
             console.log(error)
