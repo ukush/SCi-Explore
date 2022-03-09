@@ -48,7 +48,7 @@ app.set('view engine', 'ejs')
 app.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
-    if (req.session.username == null) {
+    if (!req.session.authenticated) {
         res.redirect('/login')
     }
     else {

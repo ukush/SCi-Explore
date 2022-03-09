@@ -3,9 +3,10 @@ const router = express.Router()
 
 
 router.get('/', (req, res) => {
-    req.session.destroy
-    console.log(req.sessionID);
-    res.render('logout')
+    console.log(req.sessionID)
+    req.session.destroy(function(err) {
+      res.redirect('/');
+  });
   })
 
 
