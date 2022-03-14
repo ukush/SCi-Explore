@@ -120,11 +120,7 @@ tbody {
     font-family: Calibri;
 }
 
-.highlight {
-    background-color: lightskyblue;
-}
-
-#miss tr {
+#mission tr {
     cursor: pointer;
 }
 
@@ -139,4 +135,8 @@ tbody {
 
 #return-to-homepage {
     margin-top: 50px;
+}
+
+.selected {
+    color: white;
 }

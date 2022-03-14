@@ -108,7 +108,7 @@
 </div>
 
 <div id="results">
-    <table class="table table-sm table-striped" id="miss">
+    <table class="table table-sm table-striped" id="mission">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Mission ID</th>
@@ -132,7 +132,7 @@
             </tr>
             <tr>
                 <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
+                <td>52.5, -0.5</td>
                 <td>12/01/2021</td>
                 <td>3.7Mb</td>
                 <td>CHANGED</td>
@@ -205,72 +205,83 @@
         </tbody>
     </table>
     <script>
-        var table = document.getElementById('miss');
+        //Highlight table row on click
+        var table = document.getElementById('mission');
+        var cells = table.getElementsByTagName('td');
+        for (var i = 0; i < cells.length; i++) {
+            // Take each cell
+            var cell = cells[i];
+            // do something on onclick event for cell
+            cell.onclick = function clickCell() {
+
+                // Get the row id where the cell exists
+                var rowId = this.parentNode.rowIndex;
+                console.log(rowId);
+
+                var rowsNotSelected = table.getElementsByTagName('tr');
+                for (var row = 0; row < rowsNotSelected.length; row++) {
+                    rowsNotSelected[row].style.backgroundColor = "";
+                    rowsNotSelected[row].classList.remove('selected');
+                }
+                var rowSelected = table.getElementsByTagName('tr')[rowId];
+                rowSelected.style.backgroundColor = "cornflowerblue";
+                rowSelected.className += "selected";
+
+            }
+        }
+
         for (var i = 0; i < table.rows.length; i++) {
             table.rows[i].addEventListener('click', function() {
+
+                //Get zoom from 2nd column
                 var msg = '';
                 var msgArray = [];
                 for (var j = 1; j < 2; j++) {
                     msg += this.cells[j].innerHTML;
                     msgArray.push(msg)
                 }
-                for (var j = 0; j < this.cells.length; j++) {
-                    this.cells[j].classList.toggle('highlight');
-                }
+
                 var array = msgArray[0].split(",")
                 var a = parseFloat(array[0])
                 var b = parseFloat(array[1])
                 var newArray = []
                 newArray.push(a, b)
                 map.setView(newArray, 12);
+                var mission = {
+                    "type": "FeatureCollection",
+                    "features": [{
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Scene",
+                            "popupContent": "EnterTextHere"
+                        },
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                [
+                                    [-0.55, 51.48],
+                                    [-0.55, 51.53],
+                                    [-0.41, 51.53],
+                                    [-0.41, 51.48]
+                                ]
+                            ]
+                        }
+                    }]
+                }
+                var AllProjectArray = L.geoJSON();
+                AllProjectArray.addData(mission);
+
+                AllProjectArray.addTo(map);
+
+                var layerID = {};
+                AllProjectArray.eachLayer(function(layer) {
+                    layerID[layer.feature.id] = AllProjectArray.getLayerId(layer);
+                });
 
             });
         }
     </script>
 </div>
-<script>
-    //Use this to create  missions containing scenes
-    function onEachFeature(feature, layer) {
-        // does this feature have a property named popupContent?
-        if (feature.properties && feature.properties.popupContent) {
-            layer.bindPopup(feature.properties.popupContent);
-        }
-    }
 
-    var mission = {
-        "type": "FeatureCollection",
-        "features": [{
-            "type": "Feature",
-            "properties": {
-                "name": "Scene",
-                "popupContent": "EnterTextHere"
-            },
-            "geometry": {
-                "type": "Polygon",
-                "coordinates": [
-                    [
-                        [0.363, 51.694],
-                        [0.37, 51.694],
-                        [0.373, 51.739],
-                        [0.366, 51.739],
-                        [0.363, 51.694]
-                    ]
-                ]
-            }
-        }]
-    }
-
-    var map = new L.Map('minimap', {
-        center: [53, -4],
-        zoom: 6,
-        cursor: true
-    });
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
-
-    L.geoJSON(mission, {
-        onEachFeature: onEachFeature
-    }).addTo(map)
-</script>
+<script src="../minimap.js"></script>
+<script src="../api.js"></script>
