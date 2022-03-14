@@ -5,7 +5,7 @@ const router = express.Router()
 router.get('/', (req, res) => {
     console.log(req.sessionID)
     req.session.destroy(function(err) {
-      res.redirect('/');
+      res.render('logout')
   });
   })
 
