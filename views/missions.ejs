@@ -1,5 +1,7 @@
 <div id="minimap"></div>
-<div id="metadata">
+
+<!--Create Mission Metadata (right-side of page)-->
+<div id="metadata" class="hidden">
     <table class="table table-sm">
         <thead class="thead-dark">
             <tr>
@@ -31,82 +33,11 @@
                 <th>Object Type</th>
                 <td>MISSION</td>
             </tr>
-            <tr>
-                <th>Source Library</th>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th>Mission ID</th>
-                <td>MISS100055</td>
-            </tr>
-            <tr>
-                <th>Coordinates</th>
-                <td>53.2, -8.1</td>
-            </tr>
-            <tr>
-                <th>Date Created</th>
-                <td>10/01/2021</td>
-            </tr>
-            <tr>
-                <th>File Size</th>
-                <td>2.5Mb</td>
-            </tr>
-            <tr>
-                <th>Object Status</th>
-                <td>NEW</td>
-            </tr>
-            <tr>
-                <th>Object Type</th>
-                <td>MISSION</td>
-            </tr>
-            <tr>
-                <th>Source Library</th>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th>Mission ID</th>
-                <td>MISS100055</td>
-            </tr>
-            <tr>
-                <th>Coordinates</th>
-                <td>53.2, -8.1</td>
-            </tr>
-            <tr>
-                <th>Date Created</th>
-                <td>10/01/2021</td>
-            </tr>
-            <tr>
-                <th>File Size</th>
-                <td>2.5Mb</td>
-            </tr>
-            <tr>
-                <th>Object Status</th>
-                <td>NEW</td>
-            </tr>
-            <tr>
-                <th>Object Type</th>
-                <td>MISSION</td>
-            </tr>
-            <tr>
-                <th>Source Library</th>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th>Mission ID</th>
-                <td>MISS100055</td>
-            </tr>
-            <tr>
-                <th>Coordinates</th>
-                <td>53.2, -8.1</td>
-            </tr>
-            <tr>
-                <th>Date Created</th>
-                <td>10/01/2021</td>
-            </tr>
         </tbody>
     </table>
 </div>
 
+<!--Display Missions (bottom of page)-->
 <div id="results">
     <table class="table table-sm table-striped" id="mission">
         <thead class="thead-dark">
@@ -205,15 +136,12 @@
         </tbody>
     </table>
     <script>
-        //Highlight table row on click
+        // Highlight table row on click
         var table = document.getElementById('mission');
         var cells = table.getElementsByTagName('td');
         for (var i = 0; i < cells.length; i++) {
-            // Take each cell
             var cell = cells[i];
-            // do something on onclick event for cell
-            cell.onclick = function clickCell() {
-
+            cell.onclick = function() {
                 // Get the row id where the cell exists
                 var rowId = this.parentNode.rowIndex;
                 console.log(rowId);
@@ -227,13 +155,18 @@
                 rowSelected.style.backgroundColor = "cornflowerblue";
                 rowSelected.className += "selected";
 
+                var showTable = document.getElementById('metadata');
+                var mm = document.getElementById('minimap');
+                showTable.className -= "hidden";
+                mm.className += " reduceSize";
             }
         }
 
         for (var i = 0; i < table.rows.length; i++) {
             table.rows[i].addEventListener('click', function() {
 
-                //Get zoom from 2nd column
+
+                //Get zoom location from 2nd column
                 var msg = '';
                 var msgArray = [];
                 for (var j = 1; j < 2; j++) {
@@ -241,6 +174,7 @@
                     msgArray.push(msg)
                 }
 
+                //Creates mission object, should be replaced with API data
                 var array = msgArray[0].split(",")
                 var a = parseFloat(array[0])
                 var b = parseFloat(array[1])
@@ -270,13 +204,7 @@
                 }
                 var AllProjectArray = L.geoJSON();
                 AllProjectArray.addData(mission);
-
                 AllProjectArray.addTo(map);
-
-                var layerID = {};
-                AllProjectArray.eachLayer(function(layer) {
-                    layerID[layer.feature.id] = AllProjectArray.getLayerId(layer);
-                });
 
             });
         }

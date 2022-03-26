@@ -1,11 +1,11 @@
 var addressPoints = [
-    [51.5, -0.5, "ID1"],
-    [52.5, -0.1, "ID2"],
-    [53.5, -1, "ID3"],
-    [51, -2, "ID4"],
-    [52.5, -2.5, "ID5"],
-    [51.5, -3, "ID6"],
-    [55, -2, "ID7"]
+    [51.5, -0.5, "Metadata goes here"],
+    [52.5, -0.1, "Metadata goes here"],
+    [53.5, -1, "Metadata goes here"],
+    [51, -2, "Metadata goes here"],
+    [52.5, -2.5, "Metadata goes here"],
+    [51.5, -3, "Metadata goes here"],
+    [55, -2, "Metadata goes here"]
 ]
 
 var map = L.map('map').setView([53, -4], 6);

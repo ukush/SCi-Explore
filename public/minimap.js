@@ -1,11 +1,3 @@
-//Use this to create  missions containing scenes
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
-    }
-}
-
 //ONLY SHOW IF CLICKING THROUGH TO THIS PAGE FROM A PIN
 var mission = {
         "type": "FeatureCollection",
