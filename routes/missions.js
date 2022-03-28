@@ -6,6 +6,8 @@
 // import express
 const express = require('express')
 const url = require('url'); 
+const API = require("./API_calls.js")
+const token = require("./login.js")
 
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
@@ -19,8 +21,10 @@ router.get('/', (req, res) => {
         res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
     }
     else {
-        res.render('missions')
-    }   
+        console.log(API.data_get(token.access_token))
+        let data = new Promise(API.data_get(access_token))
+        data.then(res.render('missions.ejs', { data: data }))
+    }
     
 })
 

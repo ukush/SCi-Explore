@@ -8,6 +8,8 @@ var addressPoints = [
     [55, -2, "ID7"]
 ]
 
+
+
 var map = L.map('map').setView([53, -4], 6);
 
 L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -32,11 +34,10 @@ for (var i = 0; i < addressPoints.length; i++) {
 //marker.bindPopup("<b>Scene</b><br>") //add data we want
 
 //Use this to create  missions containing scenes
-
 var mission = {
     "type": "FeatureCollection",
     "features": [{
-        "type": "Feature",
+        "type": "",
         "properties": {
             "name": "Scene",
             "popupContent": "EnterTextHere"

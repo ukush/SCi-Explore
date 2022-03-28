@@ -17,6 +17,8 @@ const uuid = require('uuid')
 
 const url = require('url')
 
+const authMiddleware = require('./auth/authMiddleware')
+
 // save port to 
 const PORT = process.env.PORT || 3000
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -61,11 +63,10 @@ const loginrouter = require('./routes/login')
 app.use('/login', loginrouter)
 
 const missionRouter = require('./routes/missions')
-app.use('/missions', missionRouter)
+app.use('/missions', authMiddleware, missionRouter)
 
 const indexrouter = require('./routes/index')
-const e = require('express')
-app.use('/index', indexrouter)
+app.use('/index', authMiddleware, indexrouter)
 
 
 
