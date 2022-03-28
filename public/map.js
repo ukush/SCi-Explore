@@ -26,3 +26,12 @@ for (var i = 0; i < addressPoints.length; i++) {
     markers.addLayer(marker);
     map.addLayer(markers);
 }
+
+// add map scale
+L.control.scale({position: 'topleft'}).addTo(map)
+
+// add coordinate mouse position
+map.on('mousemove', function(e) {
+    $('.coordinates').html(`Lat: ${e.latlng.lat} | Lng: ${e.latlng.lng}`)
+});
+

@@ -76,7 +76,7 @@ ul {
 }
 
 #map {
-    height: 700px;
+    height: 600px;
 }
 
 #minimap {
@@ -145,4 +145,12 @@ tbody {
 
 .reduceSize {
     width: 70% !important;
+}
+
+.coordinates {
+    
+}
+
+.coordinates.latlong {
+    text-align: center;
 }
