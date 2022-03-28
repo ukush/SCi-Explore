@@ -81,20 +81,18 @@ ul {
 
 #minimap {
     height: 400px;
-    width: 70%;
+    width: 100%;
     float: left;
 }
 
 #metadata {
     width: 30%;
-    height: 675px;
     float: right;
 }
 
 #results {
-    width: 70%;
+    width: 100%;
     height: 250px;
-    float: left;
 }
 
 thead {
@@ -120,11 +118,7 @@ tbody {
     font-family: Calibri;
 }
 
-.highlight {
-    background-color: lightskyblue;
-}
-
-#miss tr {
+#mission tr {
     cursor: pointer;
 }
 
@@ -139,4 +133,16 @@ tbody {
 
 #return-to-homepage {
     margin-top: 50px;
+}
+
+.selected {
+    color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+.reduceSize {
+    width: 70% !important;
 }

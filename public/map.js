@@ -1,11 +1,11 @@
 var addressPoints = [
-    [51.5, -0.5, "ID1"],
-    [52.5, -0.1, "ID2"],
-    [53.5, -1, "ID3"],
-    [51, -2, "ID4"],
-    [52.5, -2.5, "ID5"],
-    [51.5, -3, "ID6"],
-    [55, -2, "ID7"]
+    [51.5, -0.5, "Metadata goes here"],
+    [52.5, -0.1, "Metadata goes here"],
+    [53.5, -1, "Metadata goes here"],
+    [51, -2, "Metadata goes here"],
+    [52.5, -2.5, "Metadata goes here"],
+    [51.5, -3, "Metadata goes here"],
+    [55, -2, "Metadata goes here"]
 ]
 
 var map = L.map('map').setView([53, -4], 6);
@@ -26,36 +26,3 @@ for (var i = 0; i < addressPoints.length; i++) {
     markers.addLayer(marker);
     map.addLayer(markers);
 }
-
-//Use this to create all single map pin
-//var marker = L.marker([51.5, -3]).addTo(map);
-//marker.bindPopup("<b>Scene</b><br>") //add data we want
-
-//Use this to create  missions containing scenes
-
-var mission = {
-    "type": "FeatureCollection",
-    "features": [{
-        "type": "Feature",
-        "properties": {
-            "name": "Scene",
-            "popupContent": "EnterTextHere"
-        },
-        "geometry": {
-            "type": "Polygon",
-            "coordinates": [
-                [
-                    [0.363, 51.694],
-                    [0.37, 51.694],
-                    [0.373, 51.739],
-                    [0.366, 51.739],
-                    [0.363, 51.694]
-                ]
-            ]
-        }
-    }]
-}
-
-L.geoJSON(mission, {
-    onEachFeature: onEachFeature
-}).addTo(map)
