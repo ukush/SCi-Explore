@@ -10,10 +10,6 @@ var addressPoints = [
 
 var map = L.map('map').setView([53, -4], 6);
 
-/*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-*/
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
@@ -50,7 +46,7 @@ L.Control.Watermark = L.Control.extend({
     onAdd: function(map){
         var img = L.DomUtil.create('img')
         img.src = 'images/sci-logo.png'
-        img.style.width = '80px'
+        img.style.width = '60px'
         return img
     },
     onRemove: function(map){}
