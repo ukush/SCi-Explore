@@ -10,9 +10,15 @@ var addressPoints = [
 
 var map = L.map('map').setView([53, -4], 6);
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+/*L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
+*/
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 19,
+	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map)
 
 var markers = L.markerClusterGroup();
 
@@ -27,11 +33,32 @@ for (var i = 0; i < addressPoints.length; i++) {
     map.addLayer(markers);
 }
 
+L.layerGroup(L.latlng)
+
 // add map scale
 L.control.scale({position: 'topleft'}).addTo(map)
 
+
 // add coordinate mouse position
 map.on('mousemove', function(e) {
-    $('.coordinates').html(`Lat: ${e.latlng.lat} | Lng: ${e.latlng.lng}`)
+    var latlong = `+${e.latlng.lat} ${e.latlng.lng}`
+    $('.coordinates').html(latlong)
 });
+
+// add sci logo onto map as overlay
+L.Control.Watermark = L.Control.extend({
+    onAdd: function(map){
+        var img = L.DomUtil.create('img')
+        img.src = 'images/sci-logo.png'
+        img.style.width = '80px'
+        return img
+    },
+    onRemove: function(map){}
+});
+
+    L.control.watermark = function(openstreetmap){
+        return new L.Control.Watermark(openstreetmap)
+    }
+
+    L.control.watermark({position: 'topright'}).addTo(map)
 

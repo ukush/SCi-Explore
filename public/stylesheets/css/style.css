@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    background-color: #f5f5f5;
+    background-color: #262626;
     font-size: 20px;
     font-family: 'Calibri';
     margin: 0 auto;
@@ -145,12 +145,4 @@ tbody {
 
 .reduceSize {
     width: 70% !important;
-}
-
-.coordinates {
-    
-}
-
-.coordinates.latlong {
-    text-align: center;
 }
