@@ -8,6 +8,8 @@ var addressPoints = [
     [55, -2, "Metadata goes here"]
 ]
 
+
+
 var map = L.map('map').setView([53, -4], 6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

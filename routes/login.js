@@ -3,79 +3,24 @@ const router = express.Router()
 const bodyparser = require("body-parser")
 const request = require("request")
 const res = require("express/lib/response")
-const url = require('url'); 
+const url = require('url');
 const session = require("express-session")
-const { dirname } = require("path")
-const path = require("path")
+const authUser = require("../auth/authCookie.js")
 
 
-let urlencodedparser = bodyparser.urlencoded( { extended: false })
+let urlencodedparser = bodyparser.urlencoded({ extended: false })
 
 router.get('/', (req, res) => {
-  res.render('login', {layout: 'login-layout'})
+    res.render('login', { layout: 'login-layout' })
 })
 
-function Authorization(data, res) {
-  // Create buffer object, specifying utf8 as encoding
-  let string = 'sci-toolset'+":"+'st'
-  let bufferObj = Buffer.from(string, "utf8");
-  
-  // Encode the Buffer as a base64 string
-  let base64String = bufferObj.toString("base64");
-  var options = {
-      'method': 'POST',
-      'url': 'https://hallam.sci-toolset.com/api/v1/token', // getAccessToken
-      'headers': {
-        'Authorization': `Basic ${base64String}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      form: {
-        'username': data.username,
-        'password': data.password,
-        'scope': 'read write',
-        'client_id': 'sci-toolset',
-        'client_secret': 'st',
-        'grant_type': 'password'
-      }
-    };
-
-  request(options, function(error, response) {  
-      if (error) {
-        throw new Error(error);
-      } 
-      var data = JSON.parse(response.body)
-      res(data)
-  })
-}
-
 router.post('/', urlencodedparser, (request, response) => {
-  Authorization(request.body, function(res) {
-    if(res.access_token!=null){
-
-      // create a session
-      // set session username
-      request.session.username = request.body.username
-      request.session.password = request.body.password
-      // authenticate the session
-      request.session.authenticated = true
-
-      request.session.access_token = 'hello'
-
-      // console log session information
-      console.log('Is session authenticated: ' + request.session.authenticated);
-      console.log('SessionID: ' + request.sessionID)
-      console.log("Session Username: " + request.session.username);
-      console.log("Session Password: " + request.session.password);
-      console.log("Cookie Expiry: " + request.session.cookie.maxAge);
-
-      // direct to index page
-      response.redirect(url.format({ pathname: "/index", query: res, format: 'json' }))
-  
-    } else {
-      console.log(res)
-      response.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
-    }
-  })
+  //response.status(200).json({ msg: "logged in"})
+  //response.redirect(url.format({ pathname: "/index", format: 'json' }))
+  //console.log(response.body)
+  request.session.username = request.body.username
+  request.session.password = request.body.password
+  response.redirect(url.format({ pathname: "/index", format: 'json' }))
 })
 
 module.exports = router;

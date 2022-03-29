@@ -17,6 +17,13 @@ const uuid = require('uuid')
 
 const url = require('url')
 
+const authMiddleware = require('./auth/authMiddleware')
+const authUser = require("./auth/authCookie")
+
+var cookieParser = require('cookie-parser');
+
+
+
 // save port to 
 const PORT = process.env.PORT || 3000
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -34,7 +41,7 @@ app.use(session({
     secret: 'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
     saveUninitialized: false,
-    cookie: {maxAge: cookieExpiry }
+    //cookie: { maxAge: cookieExpiry }
 }))
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//
@@ -43,15 +50,14 @@ app.use(session({
 app.use(layouts)
     //set up ejs view engine
 app.set('view engine', 'ejs')
-
+    //sets up cookies
 // main route
 app.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
     if (!req.session.authenticated) {
         res.redirect('/login')
-    }
-    else {
+    } else {
         res.render('index')
     }
 })
@@ -62,12 +68,13 @@ const loginrouter = require('./routes/login')
 app.use('/login', loginrouter)
 
 const missionRouter = require('./routes/missions')
-app.use('/missions', missionRouter)
+app.use('/missions', authMiddleware, missionRouter)
 
 const indexrouter = require('./routes/index')
-app.use('/index', indexrouter)
+app.use('/index', authMiddleware, indexrouter)
 
 const logoutrouter = require('./routes/logout')
+const authCookie = require('./auth/authCookie')
 app.use('/logout', logoutrouter)
 
 // ------------------------ SERVER STATIC FILES -----------------------//
