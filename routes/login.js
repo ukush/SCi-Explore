@@ -12,9 +12,6 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', urlencodedparser, (request, response) => {
-  //response.status(200).json({ msg: "logged in"})
-  //response.redirect(url.format({ pathname: "/index", format: 'json' }))
-  //console.log(response.body)
   request.session.username = request.body.username
   request.session.password = request.body.password
   response.redirect(url.format({ pathname: "/index", format: 'json' }))

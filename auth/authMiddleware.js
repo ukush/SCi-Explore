@@ -7,23 +7,19 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 module.exports = (request, response, next) => {
     try {
-        //console.log(request.query)
         username = request.session.username
         password = request.session.password
         let data = { username, password }
-        console.log(data)
         AUTH.Authorization(data, function(res) {
-            //console.log(request)
             if(!res.access_token) {
-                console.log("error, no access token")
+                response.status(402).json({ error:"error, no access token generated... invalid login details"})
                 response.redirect("/login")
             }  else {
                 request.session.authenticated = true;
                 request.session.access_token = res.access_token
-                console.log(request.session.access_token)
+                //console.log(request.session.access_token)
                 next()
             }
-                    
         })
     } catch {
         response.status(401).json({

@@ -15,18 +15,11 @@ class Mission {
         this.mId = mId
         this.sId = sId
     }
-    getIds() {
-        return this
-    }
-
 }
 class Poly {
     constructor(type, coordinates) {
         this.type = type
         this.coordinates = coordinates
-    }
-    getCoordinates() {
-        return this.coordinates
     }
 }
 class Scenedata {
@@ -65,7 +58,6 @@ function data_get(access_token) {
                 for (let i=0;i<array.length;i++) {
                     let missionId = array[i].missionId
                     let sceneId = array[i].sceneId
-                    //console.log(i)
                     struct_array[i] = [new Mission(missionId, sceneId)]
                     apiGet(`/${missionId}/footprint`, access_token, function(callback) {
                         struct_array[i].push(new Poly(callback.type, callback.coordinates))
