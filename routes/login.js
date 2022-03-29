@@ -55,13 +55,17 @@ router.post('/', urlencodedparser, (request, response) => {
       // create a session
       // set session username
       request.session.username = request.body.username
+      request.session.password = request.body.password
       // authenticate the session
       request.session.authenticated = true
+
+      request.session.access_token = 'hello'
 
       // console log session information
       console.log('Is session authenticated: ' + request.session.authenticated);
       console.log('SessionID: ' + request.sessionID)
       console.log("Session Username: " + request.session.username);
+      console.log("Session Password: " + request.session.password);
       console.log("Cookie Expiry: " + request.session.cookie.maxAge);
 
       // direct to index page

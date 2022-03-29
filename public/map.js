@@ -10,7 +10,6 @@ var addressPoints = [
 
 var map = L.map('map').setView([53, -4], 6);
 
-
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -32,13 +31,13 @@ for (var i = 0; i < addressPoints.length; i++) {
 L.layerGroup(L.latlng)
 
 // add map scale
-L.control.scale({position: 'topleft'}).addTo(map)
+L.control.scale({position: 'bottomleft'}).addTo(map)
 
 
 // add coordinate mouse position
 map.on('mousemove', function(e) {
-    var latlong = `+${e.latlng.lat} ${e.latlng.lng}`
-    $('.coordinates').html(latlong)
+    var latlong = `+${e.latlng.lat.toFixed(10)} ${e.latlng.lng.toFixed(10)}`
+    $('#coordinates').html(latlong)
 });
 
 // add sci logo onto map as overlay
@@ -56,5 +55,5 @@ L.Control.Watermark = L.Control.extend({
         return new L.Control.Watermark(openstreetmap)
     }
 
-    L.control.watermark({position: 'topright'}).addTo(map)
+    L.control.watermark({position: 'bottomright'}).addTo(map)
 

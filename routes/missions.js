@@ -16,11 +16,14 @@ const router = express.Router()
 router.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
+    
+    
     if (!(req.session.authenticated)) {
         res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
     }
     else {
         res.render('missions')
+        console.log('ACCESS TOKEN IS: ' + req.session.access_token);
     }   
     
 })
