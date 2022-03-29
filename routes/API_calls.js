@@ -57,53 +57,30 @@ function apiGet(path, access_token, response) {
 //when user detailed have been validated coorectly and deemed valid this URL get is called
 //This collects all the data from the API
 function data_get(access_token) {
-    return Promise.all([
-        new Promise(resolve =>
-            //this apiGet call collects all mission Id's and scene Id's from the api
-            //these are required to collect all associated meta data futher down the program
-            apiGet("/search", access_token, function(callback) {
-                let array = callback.results
+    return new Promise(resolve => 
+        apiGet("/search", access_token, function(callback) {
+            let array = callback.results
                 let temp
                 let struct_array = [];
+                let a = []
+                let b = []
                 for (let i=0;i<array.length;i++) {
                     let missionId = array[i].missionId
                     let sceneId = array[i].sceneId
-                    let data = { mId:missionId, sId:sceneId }
-                    //temp = new Mission(missionId, sceneId)
-                    //struct_array.push(new Mission(missionId, sceneId))
-                    struct_array.push(data)
-                    resolve(struct_array)
+                    temp = new Mission(missionId, sceneId)
+                    console.log(i)
+                    struct_array.push(new Mission(missionId, sceneId))
+                    apiGet(`/${missionId}/footprint`, access_token, function(callback) {
+                        a.push(new Poly(callback.type, callback.coordinates))
+                        apiGet(`/${missionId}/scene/${sceneId}/frames`, access_token, function(callback) {
+                            b.push(new Scenedata(callback.id, callback.name, callback.aircraftTakeOffTime, callback.scenes))
+                            apiGet(`/${missionId}/scene/${sceneId}/frames`, access_token, function() {
+                                resolve([struct_array,a,b])
+                            })
+                        })
+                    })
                 }
-            })),
-        new Promise(resolve =>
-            apiGet("/search", access_token, function(callback) {
-                var array = callback.results
-                array.forEach(element => {
-                    var mission_ID = element.missionId
-                    //this apiGet call returns the coordinates for the Leaflet api and stores them inside the 
-                    //data array to be accessed once all data is loaded
-                    apiGet(`/${mission_ID}/footprint`, access_token, function(callback) {
-                        //let type = callback.type
-                        //let coord = callback.coordinates
-                        //resolve(new Poly(type, coord))
-                        resolve(callback)
-                    })
-                })
-            })),
-        new Promise(resolve =>
-            apiGet("/search", access_token, function(callback) {
-                var array = callback.results
-                array.forEach(element => {
-                    var mission_ID = element.missionId
-                    var scene_ID = element.sceneId
-                    //this apiGet call collects all the meta data relevent to the inputted mission->scene
-                    apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(callback) {
-                        //resolve(new Scenedata(callback.id, callback.name, callback.aircraftTakeOffTime, callback.scenes)) 
-                        resolve(callback)
-                    })
-                })
             }))
-    ])
 }
 
 module.exports = { data_get, apiGet }
