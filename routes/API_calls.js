@@ -62,20 +62,17 @@ function data_get(access_token) {
             let array = callback.results
                 let temp
                 let struct_array = [];
-                let a = []
-                let b = []
                 for (let i=0;i<array.length;i++) {
                     let missionId = array[i].missionId
                     let sceneId = array[i].sceneId
-                    temp = new Mission(missionId, sceneId)
-                    console.log(i)
-                    struct_array.push(new Mission(missionId, sceneId))
+                    //console.log(i)
+                    struct_array[i] = [new Mission(missionId, sceneId)]
                     apiGet(`/${missionId}/footprint`, access_token, function(callback) {
-                        a.push(new Poly(callback.type, callback.coordinates))
+                        struct_array[i].push(new Poly(callback.type, callback.coordinates))
                         apiGet(`/${missionId}/scene/${sceneId}/frames`, access_token, function(callback) {
-                            b.push(new Scenedata(callback.id, callback.name, callback.aircraftTakeOffTime, callback.scenes))
+                            struct_array[i].push(new Scenedata(callback.id, callback.name, callback.aircraftTakeOffTime, callback.scenes))
                             apiGet(`/${missionId}/scene/${sceneId}/frames`, access_token, function() {
-                                resolve([struct_array,a,b])
+                                resolve([struct_array])
                             })
                         })
                     })
