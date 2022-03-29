@@ -25,7 +25,7 @@ router.get('/', urlencodedparser, (request, response) => {
         function(rawdata) {
             let parseddata=JSON.stringify(rawdata)
             response.render('index.ejs', { data: parseddata })
-            console.log(rawdata)
+            console.log(parseddata)
         },
         function(error) {
             console.log(error)

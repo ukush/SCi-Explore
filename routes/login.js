@@ -1,11 +1,8 @@
 const express = require("express")
 const router = express.Router()
 const bodyparser = require("body-parser")
-const request = require("request")
-const res = require("express/lib/response")
 const url = require('url');
-const session = require("express-session")
-const authUser = require("../auth/authCookie.js")
+
 
 
 let urlencodedparser = bodyparser.urlencoded({ extended: false })
