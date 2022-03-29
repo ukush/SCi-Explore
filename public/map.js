@@ -1,3 +1,5 @@
+var map = L.map('map').setView([53, -4], 6);
+
 var addressPoints = [
     [51.5, -0.5, "Metadata goes here"],
     [52.5, -0.1, "Metadata goes here"],
@@ -8,16 +10,22 @@ var addressPoints = [
     [55, -2, "Metadata goes here"]
 ]
 
+var polygon = L.polygon([
+    [51.509, -3.08],
+    [51.51, -0.047],
+    [55.503, -0.06],
+    [55.503, -3.06]
+])
 
-
-var map = L.map('map').setView([53, -4], 6);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map)
+L.tileLayer('').addTo(map);
 
 var markers = L.markerClusterGroup();
+var polygons = L.layerGroup([polygon]);
+
+var ctrl = L.control.layers([]);
+ctrl.addOverlay(markers, 'Pins');
+ctrl.addOverlay(polygons, 'Polygons');
+ctrl.addTo(map);
 
 for (var i = 0; i < addressPoints.length; i++) {
     var a = addressPoints[i];
@@ -33,7 +41,7 @@ for (var i = 0; i < addressPoints.length; i++) {
 L.layerGroup(L.latlng)
 
 // add map scale
-L.control.scale({position: 'bottomleft'}).addTo(map)
+L.control.scale({ position: 'bottomleft' }).addTo(map)
 
 
 // add coordinate mouse position
@@ -44,18 +52,17 @@ map.on('mousemove', function(e) {
 
 // add sci logo onto map as overlay
 L.Control.Watermark = L.Control.extend({
-    onAdd: function(map){
+    onAdd: function(map) {
         var img = L.DomUtil.create('img')
         img.src = 'images/sci-logo.png'
         img.style.width = '60px'
         return img
     },
-    onRemove: function(map){}
+    onRemove: function(map) {}
 });
 
-    L.control.watermark = function(openstreetmap){
-        return new L.Control.Watermark(openstreetmap)
-    }
+L.control.watermark = function(openstreetmap) {
+    return new L.Control.Watermark(openstreetmap)
+}
 
-    L.control.watermark({position: 'bottomright'}).addTo(map)
-
+L.control.watermark({ position: 'bottomright' }).addTo(map)
