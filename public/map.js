@@ -1,3 +1,5 @@
+var map = L.map('map').setView([53, -4], 6);
+
 var addressPoints = [
     [51.5, -0.5, "Metadata goes here"],
     [52.5, -0.1, "Metadata goes here"],
@@ -8,13 +10,22 @@ var addressPoints = [
     [55, -2, "Metadata goes here"]
 ]
 
-var map = L.map('map').setView([53, -4], 6);
+var polygon = L.polygon([
+    [51.509, -3.08],
+    [51.51, -0.047],
+    [55.503, -0.06],
+    [55.503, -3.06]
+])
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+L.tileLayer('').addTo(map);
 
 var markers = L.markerClusterGroup();
+var polygons = L.layerGroup([polygon]);
+
+var ctrl = L.control.layers([]);
+ctrl.addOverlay(markers, 'Pins');
+ctrl.addOverlay(polygons, 'Polygons');
+ctrl.addTo(map);
 
 for (var i = 0; i < addressPoints.length; i++) {
     var a = addressPoints[i];
