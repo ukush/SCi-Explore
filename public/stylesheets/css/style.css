@@ -36,7 +36,9 @@ body {
 
 .leftnav {
     font-weight: bold;
-    width: 10%;
+    font-size: 14px;
+    width: 15%;
+    padding-top: -5px;
 }
 
 .leftnav a {
