@@ -177,7 +177,7 @@
                 //Creates mission object, should be replaced with API data
                 var array = msgArray[0].split(",")
                 var a = parseFloat(array[0])
-                var b = parseFloat(array[1])
+                var b = parseFloat(array[1]) + 0.1
                 var newArray = []
                 newArray.push(a, b)
                 map.setView(newArray, 12);
