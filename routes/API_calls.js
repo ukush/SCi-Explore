@@ -68,8 +68,10 @@ function data_get(access_token) {
                 for (let i=0;i<array.length;i++) {
                     let missionId = array[i].missionId
                     let sceneId = array[i].sceneId
-                    temp = new Mission(missionId, sceneId)
-                    struct_array.push(new Mission(missionId, sceneId))
+                    let data = { mId:missionId, sId:sceneId }
+                    //temp = new Mission(missionId, sceneId)
+                    //struct_array.push(new Mission(missionId, sceneId))
+                    struct_array.push(data)
                     resolve(struct_array)
                 }
             })),
@@ -81,9 +83,10 @@ function data_get(access_token) {
                     //this apiGet call returns the coordinates for the Leaflet api and stores them inside the 
                     //data array to be accessed once all data is loaded
                     apiGet(`/${mission_ID}/footprint`, access_token, function(callback) {
-                        let type = callback.type
-                        let coord = callback.coordinates
-                        resolve(new Poly(type, coord))
+                        //let type = callback.type
+                        //let coord = callback.coordinates
+                        //resolve(new Poly(type, coord))
+                        resolve(callback)
                     })
                 })
             })),
@@ -95,7 +98,8 @@ function data_get(access_token) {
                     var scene_ID = element.sceneId
                     //this apiGet call collects all the meta data relevent to the inputted mission->scene
                     apiGet(`/${mission_ID}/scene/${scene_ID}/frames`, access_token, function(callback) {
-                        resolve(new Scenedata(callback.id, callback.name, callback.aircraftTakeOffTime, callback.scenes)) 
+                        //resolve(new Scenedata(callback.id, callback.name, callback.aircraftTakeOffTime, callback.scenes)) 
+                        resolve(callback)
                     })
                 })
             }))

@@ -33,6 +33,7 @@ function Authorization(data, res) {
           throw new Error(error);
         } 
         var data = JSON.parse(response.body)
+        console.log(data)
         res(data)
     })
   }

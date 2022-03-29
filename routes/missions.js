@@ -16,7 +16,7 @@ let urlencodedparser = bodyparser.urlencoded({ extended: false })
 // the router works exactly the same as the app, it has http functions like get, post etc
 // use the router in the same way we use the app in the server.js
 const router = express.Router()
-
+/*
 router.get('/', urlencodedparser, (req, response) => {
     let rawdata = API.data_get(access)
     rawdata.then(
@@ -27,6 +27,18 @@ router.get('/', urlencodedparser, (req, response) => {
         },
         function(error) {
             console.log(error)
+        }
+    )
+})
+*/
+router.get('/', (req, res) => {
+    let access = req.session.access_token
+    console.log(access)
+    let data = API.data_get(access)
+    data.then(
+        function(data) {
+            console.log(data)
+            res.render('missions', { data: data })
         }
     )
 })
@@ -44,4 +56,4 @@ router.get('/create', (req, res) => {
 
 
 // export this router so we can use it in the server.js file
-module.exports = router
+module.exports = router;

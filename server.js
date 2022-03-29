@@ -18,8 +18,10 @@ const uuid = require('uuid')
 const url = require('url')
 
 const authMiddleware = require('./auth/authMiddleware')
+const authUser = require("./auth/authCookie")
 
 var cookieParser = require('cookie-parser');
+
 
 
 // save port to 
@@ -39,7 +41,7 @@ app.use(session({
     secret: 'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
     saveUninitialized: false,
-    cookie: { maxAge: cookieExpiry }
+    //cookie: { maxAge: cookieExpiry }
 }))
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//
@@ -49,8 +51,6 @@ app.use(layouts)
     //set up ejs view engine
 app.set('view engine', 'ejs')
     //sets up cookies
-
-//app.use(cookieParser);
 // main route
 app.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
@@ -74,6 +74,7 @@ const indexrouter = require('./routes/index')
 app.use('/index', authMiddleware, indexrouter)
 
 const logoutrouter = require('./routes/logout')
+const authCookie = require('./auth/authCookie')
 app.use('/logout', logoutrouter)
 
 // ------------------------ SERVER STATIC FILES -----------------------//

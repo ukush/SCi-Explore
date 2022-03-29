@@ -19,12 +19,13 @@ let urlencodedparser = bodyparser.urlencoded({ extended: false })
 const router = express.Router()
 
 router.get('/', urlencodedparser, (request, response) => {
-    let rawdata = API.data_get(access)
+    access_token = request.session.access_token
+    let rawdata = API.data_get(access_token)
     rawdata.then(
         function(rawdata) {
-            Metadata = rawdata
-            response.render('index.ejs', { data: Metadata })
-            console.log(Metadata)
+            let parseddata=JSON.stringify(rawdata)
+            response.render('index.ejs', { data:parseddata })
+            console.log(parseddata)
         },
         function(error) {
             console.log(error)

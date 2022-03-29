@@ -5,10 +5,9 @@ const request = require("request")
 const res = require("express/lib/response")
 const url = require('url');
 const session = require("express-session")
+const authUser = require("../auth/authCookie.js")
 
-const API = require("./API_calls.js")
 
-let access_token;
 let urlencodedparser = bodyparser.urlencoded({ extended: false })
 
 router.get('/', (req, res) => {
@@ -16,7 +15,12 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', urlencodedparser, (request, response) => {
-    response.redirect(url.format({ pathname: "/index", query: request.body, format: 'json' }))
+  //response.status(200).json({ msg: "logged in"})
+  //response.redirect(url.format({ pathname: "/index", format: 'json' }))
+  //console.log(response.body)
+  request.session.username = request.body.username
+  request.session.password = request.body.password
+  response.redirect(url.format({ pathname: "/index", format: 'json' }))
 })
 
 module.exports = router;
