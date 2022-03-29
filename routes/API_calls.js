@@ -15,11 +15,23 @@ class Mission {
         this.mId = mId
         this.sId = sId
     }
+    getmID() {
+        return this.mId
+    }
+    getsID() {
+        return this.sId
+    }
 }
 class Poly {
     constructor(type, coordinates) {
         this.type = type
-        this.coordinates = coordinates
+        this.coordinates = coordinates 
+    }
+    getcoordinates() {
+        return this.coordinates
+    }
+    gettype() {
+        return this.type
     }
 }
 class Scenedata {
@@ -28,6 +40,9 @@ class Scenedata {
         this.name = name
         this.ATOT = ATOT
         this.scenes = scenes
+    }
+    getid() {
+        return this.id
     }
 }
 
@@ -72,4 +87,4 @@ function data_get(access_token) {
             }))
 }
 
-module.exports = { data_get, apiGet }
+module.exports = { data_get, apiGet, Poly, Mission, Scenedata }

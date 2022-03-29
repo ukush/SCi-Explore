@@ -24,7 +24,7 @@ router.get('/', urlencodedparser, (request, response) => {
     rawdata.then(
         function(rawdata) {
             response.render('index.ejs', { data: rawdata })
-            console.log(rawdata[0][1])
+            console.log(rawdata[0][0][1].coordinates.coordinates)
         },
         function(error) {
             console.log(error)

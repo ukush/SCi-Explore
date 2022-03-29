@@ -10,7 +10,7 @@
         </thead>
         <tbody>
             <tr>
-                <th><%=data%></th>
+                <th>Mission</th>
                 <td>MISS100055</td>
             </tr>
             <tr>
@@ -52,87 +52,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">MISS100055</th>
-                <td>51.5, -0.5</td>
-                <td>10/01/2021</td>
-                <td>2.5Mb</td>
-                <td>NEW</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>52.5, -0.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
+            <% for (var i = 0; i < data[0].length;i++) { %>
+                <tr>
+                    <td><%= data[0][i][0].mId %> </td>
+                    <td><%= data[0][i][1].coordinates || data[0] %></td>
+                    <td><%= data[0][i][2].id || data[0]%></td>
+                </tr>
+                <% }  %>
         </tbody>
     </table>
     <script>
