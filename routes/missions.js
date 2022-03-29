@@ -5,12 +5,12 @@
 
 // import express
 const express = require('express')
-const url = require('url'); 
+const url = require('url');
 const bodyparser = require("body-parser")
 const API = require("./API_calls.js")
 const token = require("./login.js")
 
-let urlencodedparser = bodyparser.urlencoded( { extended: false })
+let urlencodedparser = bodyparser.urlencoded({ extended: false })
 
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
@@ -20,12 +20,12 @@ const router = express.Router()
 router.get('/', urlencodedparser, (req, response) => {
     let rawdata = API.data_get(access)
     rawdata.then(
-        function(rawdata){
+        function(rawdata) {
             Metadata = rawdata
             response.render('index.ejs', { data: Metadata })
-            //console.log(Metadata)
+                //console.log(Metadata)
         },
-        function(error){
+        function(error) {
             console.log(error)
         }
     )
@@ -35,12 +35,11 @@ router.get('/create', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
     if (!(req.session.authenticated)) {
-        res.redirect(url.format({ pathname:"/login", query: res, format: 'json' }))
-    }
-    else {
+        res.redirect(url.format({ pathname: "/login", query: res, format: 'json' }))
+    } else {
         res.render('createmission')
-    }   
-    
+    }
+
 })
 
 

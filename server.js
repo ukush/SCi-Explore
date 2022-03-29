@@ -38,8 +38,8 @@ const cookieExpiry = 74787 * 1000 // get milliseconds
 app.use(session({
     secret: 'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
-    saveUninitialized: false, // doesn't save unless changed
-    cookie: {maxAge: cookieExpiry }
+    saveUninitialized: false,
+    cookie: { maxAge: cookieExpiry }
 }))
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//
@@ -48,15 +48,15 @@ app.use(session({
 app.use(layouts)
     //set up ejs view engine
 app.set('view engine', 'ejs')
-//sets up cookies
+    //sets up cookies
 
 //app.use(cookieParser);
 // main route
 app.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
     console.log('Is session authenticated: ' + req.session.authenticated);
-    if (!(req.session.authenticated)) {
-        res.redirect(url.format({ pathname: "/login", query: res, format: 'json' }))
+    if (!req.session.authenticated) {
+        res.redirect('/login')
     } else {
         res.render('index')
     }
@@ -73,12 +73,19 @@ app.use('/missions', authMiddleware, missionRouter)
 const indexrouter = require('./routes/index')
 app.use('/index', authMiddleware, indexrouter)
 
-
+const logoutrouter = require('./routes/logout')
+app.use('/logout', logoutrouter)
 
 // ------------------------ SERVER STATIC FILES -----------------------//
 
 // Allow the app to serve static files such as css
 app.use(express.static('public'));
+
+
+// the 404 route (always goes at the end!)
+app.get('*', function(req, res) {
+    res.status(404).render('404')
+})
 
 
 // ------------------------ RUN EXPRESS SERVER -----------------------//

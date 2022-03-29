@@ -11,22 +11,22 @@ const res = require('express/lib/response');
 
 let Metadata;
 
-let urlencodedparser = bodyparser.urlencoded( { extended: false })
+let urlencodedparser = bodyparser.urlencoded({ extended: false })
 
 // set up a router
 // the router works exactly the same as the app, it has http functions like get, post etc
 // use the router in the same way we use the app in the server.js
 const router = express.Router()
 
-router.get('/', urlencodedparser,(request, response) => {
+router.get('/', urlencodedparser, (request, response) => {
     let rawdata = API.data_get(access)
     rawdata.then(
-        function(rawdata){
+        function(rawdata) {
             Metadata = rawdata
             response.render('index.ejs', { data: Metadata })
             console.log(Metadata)
         },
-        function(error){
+        function(error) {
             console.log(error)
         }
     )
