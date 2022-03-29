@@ -24,7 +24,7 @@ router.get('/', urlencodedparser,(request, response) => {
         function(rawdata){
             Metadata = rawdata
             response.render('index.ejs', { data: Metadata })
-            //console.log(Metadata)
+            console.log(Metadata)
         },
         function(error){
             console.log(error)

@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', urlencodedparser, (request, response) => {
-      response.redirect(url.format({ pathname: "/index", query: request.body, format: 'json' }))
+  response.redirect(url.format({ pathname: "/index", query: request.body, format: 'json' }))
 })
 
 module.exports = router;

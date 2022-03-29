@@ -19,6 +19,9 @@ const url = require('url')
 
 const authMiddleware = require('./auth/authMiddleware')
 
+var cookieParser = require('cookie-parser');
+
+
 // save port to 
 const PORT = process.env.PORT || 3000
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -45,7 +48,9 @@ app.use(session({
 app.use(layouts)
     //set up ejs view engine
 app.set('view engine', 'ejs')
+//sets up cookies
 
+//app.use(cookieParser);
 // main route
 app.get('/', (req, res) => {
     console.log("SessionID: " + req.sessionID);
