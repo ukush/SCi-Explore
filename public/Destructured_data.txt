@@ -1,0 +1,3 @@
+from data[0][i][0] = Mission ID
+from data[0][i][1] = Coordinates, type
+from data[0][i][2] = { id, name, ATOT, [scenes] ->  { id, name, firstFrameTime, [bands] -> { type, count, [frames] -> { id, frameNumber, fileUrl } } } } }

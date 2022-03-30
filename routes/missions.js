@@ -33,6 +33,7 @@ router.get('/create', (req, res) => {
     let data = API.data_get(access)
     data.then(
         function(data) {
+            //let organised_data = API.JSONsplit(data)
             res.render('createmission', { data: data })
         }
     )

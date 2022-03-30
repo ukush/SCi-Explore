@@ -3,6 +3,7 @@ const express = require('express')
 const request = require('request')
 const bodyparser = require("body-parser")
 const url = require('url')
+const { raw } = require('body-parser')
 
 let urlencodedparser = bodyparser.urlencoded( { extended: false })
 
@@ -62,6 +63,19 @@ function apiGet(path, access_token, response) {
     })
 }
 
+function JSONsplit(rawdata) {
+    let missions = []
+    let polys = []
+    let metadata = []
+    for (let i=0;i<rawdata[0].length;i++){
+        missions.push(rawdata[0][i][0])
+        polys.push(rawdata[0][i][1])
+        metadata.push(rawdata[0][i][2])
+    }
+    console.log(metadata)
+    return splitdata
+}
+
 //when user detailed have been validated coorectly and deemed valid this URL get is called
 //This collects all the data from the API
 function data_get(access_token) {
@@ -87,4 +101,4 @@ function data_get(access_token) {
             }))
 }
 
-module.exports = { data_get, apiGet, Poly, Mission, Scenedata }
+module.exports = { data_get, apiGet, JSONsplit, Poly, Mission, Scenedata }
