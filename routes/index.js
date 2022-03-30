@@ -23,8 +23,8 @@ router.get('/', urlencodedparser, (request, response) => {
     let rawdata = API.data_get(access_token)
     rawdata.then(
         function(rawdata) {
-            let parseddata=JSON.stringify(rawdata)
-            response.render('index.ejs', { data:parseddata })
+            let parseddata = JSON.stringify(rawdata)
+            response.render('index.ejs', { data: parseddata })
             console.log(parseddata)
         },
         function(error) {
