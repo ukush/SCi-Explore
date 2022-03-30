@@ -82,7 +82,6 @@ function data_get(access_token) {
     return new Promise(resolve => 
         apiGet("/search", access_token, function(callback) {
             let array = callback.results
-                let temp
                 let struct_array = [];
                 for (let i=0;i<array.length;i++) {
                     let missionId = array[i].missionId
