@@ -8,13 +8,20 @@
     var data = <%-JSON.stringify(data)%>;
     //console.dir(data[0][117][1].coordinates)
     var allcoords = []
-    for (var i=0;data[0].length;i++) {
-        if(data[0][0][1].coordinates !== undefined){
-            let mid = data[0][0][1].coordinates[0]
+    for (var i=0;data[0][0].length-1;i++) {
+        try {
+            if (i == 118) {
+                break;
+            }
+        if(data[0][0][1].coordinates[0] !== undefined){
+            let mid = data[0][i][1].coordinates[0]
             console.dir(mid)
             //console.dir(i)
             allcoords.push(mid)
         }
+    } catch (error) {
+        console.dir(error)
+    }
     }
     
     //console.dir(allcoords)
