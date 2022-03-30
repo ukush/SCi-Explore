@@ -95,11 +95,14 @@ ul {
 #metadata {
     width: 30%;
     float: right;
+    Overflow-y:scroll;
 }
 
 #results {
     width: 100%;
     height: 250px;
+    Overflow-y:scroll; 
+    Overflow-x:scroll; 
 }
 
 thead {
@@ -154,6 +157,7 @@ tbody {
     width: 30%;
     height: 100px;
     float: left;
+    Overflow-y:scroll;
 }
 
 .reduceSize {
