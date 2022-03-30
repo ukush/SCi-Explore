@@ -6,30 +6,32 @@
 </div>
 <script>
     var data = <%-JSON.stringify(data)%>;
-    //console.dir(data[0][117][1].coordinates)
+    console.dir(parsed)
     var allcoords = []
-    for (var i=0;data[0][0].length-1;i++) {
+    console.dir(data[0][0][1])
+    for (var i=0;data[0].length;i++) {
         try {
             if (i == 118) {
                 break;
             }
-        if(data[0][0][1].coordinates[0] !== undefined){
-            let mid = data[0][i][1].coordinates[0]
-            console.dir(mid)
+        //if(data[0][i][1] != null){
+            let mid = data[0][i][1]
+            //console.dir(mid)
             //console.dir(i)
             allcoords.push(mid)
-        }
+        //}
     } catch (error) {
         console.dir(error)
     }
     }
     
-    //console.dir(allcoords)
+    console.dir(allcoords)
 </script>
 <script>
     var map = L.map('map').setView([53, -4], 6);
 
-var addressPoints = allcoords[0]
+var addressPoints = allcoords
+console.dir(addressPoints.length)
 
 var polygon = L.polygon([
     [51.509, -3.08],
@@ -48,15 +50,21 @@ ctrl.addOverlay(markers, 'Pins');
 ctrl.addOverlay(polygons, 'Polygons');
 ctrl.addTo(map);
 
-for (var i = 0; i < addressPoints.length; i++) {
-    var a = addressPoints[i];
-    var title = a[2];
-    var marker = L.marker(new L.LatLng(a[0], a[1]), {
-        title: title
-    });
-    marker.bindPopup(title);
-    markers.addLayer(marker);
-    map.addLayer(markers);
+    for (var i = 0; i < addressPoints.length; i++) {
+        try {
+            for(var j = 0; j< addressPoints[i].length;j++){
+                var a = addressPoints[i][j];
+                var title = "point";
+                var marker = L.marker(new L.LatLng(a[0], a[1]), {
+                    title:title
+                });
+                marker.bindPopup(title);
+                markers.addLayer(marker);
+                map.addLayer(markers);
+            }
+        } catch(error) {
+            console.dir(error)
+        }
 }
 
 L.layerGroup(L.latlng)
