@@ -44,95 +44,28 @@
             <tr>
                 <th scope="col">Mission ID</th>
                 <th scope="col">Coordinates</th>
-                <th scope="col">Date Created</th>
-                <th scope="col">File Size</th>
-                <th scope="col">Object Status</th>
-                <th scope="col">Object Type</th>
-                <th scope="col">Source Library</th>
+                <th scope="col">Type</th>
+                <th scope="col">ATOT</th>
+                <th scope="col">Name</th>
+                <th scope="col">ID</th>
+                <th scope="col">Scenes</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">MISS100055</th>
-                <td>51.5, -0.5</td>
-                <td>10/01/2021</td>
-                <td>2.5Mb</td>
-                <td>NEW</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>52.5, -0.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
-            <tr>
-                <th scope="row">MISS100056</th>
-                <td>58.2, -8.5</td>
-                <td>12/01/2021</td>
-                <td>3.7Mb</td>
-                <td>CHANGED</td>
-                <td>MISSION</td>
-                <td>GBR-IRL-HALLAM</td>
-            </tr>
+            <% for (var i = 0; i < data[0].length;i++) { %>
+                <tr>
+                    <td><%= data[0][i][0].mId %> </td>
+                    <td><%= data[0][i][1].coordinates %></td>
+                    <td><%= data[0][i][1].type %></td>
+                    <% if(data[0][i][2] != null) { %>
+                    <td><%= data[0][i][2].id %></td>
+                    <td><%= data[0][i][2].ATOT %></td>
+                    <td><%= data[0][i][2].name %></td>
+                    <td><%= data[0][i][2].id %></td>
+                    <td><%= data[0][i][2].scenes %></td>
+                    <% } %>
+                </tr>
+                <% }  %>
         </tbody>
     </table>
     <script>
@@ -230,50 +163,17 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Scene ID</th>
-                    <th scope="col">Coordinates</th>
-                    <th scope="col">Date Created</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">First Frame Time</th>
+                    <th scope="col">Bands</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row">MISS100055</th>
+                    <th scope="row"></th>
                     <td>51.5, -0.5</td>
                     <td>10/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>52.5, -0.5</td>
-                    <td>12/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>58.2, -8.5</td>
-                    <td>12/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>58.2, -8.5</td>
-                    <td>12/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>58.2, -8.5</td>
-                    <td>12/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>58.2, -8.5</td>
-                    <td>12/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>58.2, -8.5</td>
-                    <td>12/01/2021</td>
-                </tr>
-                <tr>
-                    <th scope="row">MISS100056</th>
-                    <td>58.2, -8.5</td>
-                    <td>12/01/2021</td>
+                    <td></td>
                 </tr>
             </tbody>
     </table>

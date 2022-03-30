@@ -11,18 +11,7 @@ const layouts = require("express-ejs-layouts")
     //import the session api
 const session = require('express-session')
 
-const request = require("request")
-
-const uuid = require('uuid')
-
-const url = require('url')
-
 const authMiddleware = require('./auth/authMiddleware')
-const authUser = require("./auth/authCookie")
-
-var cookieParser = require('cookie-parser');
-
-
 
 // save port to 
 const PORT = process.env.PORT || 3000
@@ -53,8 +42,6 @@ app.set('view engine', 'ejs')
     //sets up cookies
 // main route
 app.get('/', (req, res) => {
-    console.log("SessionID: " + req.sessionID);
-    console.log('Is session authenticated: ' + req.session.authenticated);
     if (!req.session.authenticated) {
         res.redirect('/login')
     } else {
@@ -74,7 +61,7 @@ const indexrouter = require('./routes/index')
 app.use('/index', authMiddleware, indexrouter)
 
 const logoutrouter = require('./routes/logout')
-const authCookie = require('./auth/authCookie')
+
 app.use('/logout', logoutrouter)
 
 // ------------------------ SERVER STATIC FILES -----------------------//
