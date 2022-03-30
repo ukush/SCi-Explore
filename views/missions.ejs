@@ -55,8 +55,10 @@
             <% for (var i = 0; i < data[0].length;i++) { %>
                 <tr>
                     <td><%= data[0][i][0].mId %> </td>
+                    <% if(data[0][i][1] != null) { %>
                     <td><%= data[0][i][1].coordinates %></td>
                     <td><%= data[0][i][1].type %></td>
+                    <% } %>
                     <% if(data[0][i][2] != null) { %>
                     <td><%= data[0][i][2].id %></td>
                     <td><%= data[0][i][2].ATOT %></td>

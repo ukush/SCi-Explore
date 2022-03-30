@@ -6,7 +6,6 @@
 </div>
 <script>
     var data = <%-JSON.stringify(data)%>;
-    console.dir(parsed)
     var allcoords = []
     console.dir(data[0][0][1])
     for (var i=0;data[0].length;i++) {
@@ -14,12 +13,12 @@
             if (i == 118) {
                 break;
             }
-        //if(data[0][i][1] != null){
-            let mid = data[0][i][1]
+        if(data[0][i][1] != null){
+            let mid = data[0][i][1].coordinates[0]
             //console.dir(mid)
             //console.dir(i)
             allcoords.push(mid)
-        //}
+        }
     } catch (error) {
         console.dir(error)
     }
@@ -31,7 +30,8 @@
     var map = L.map('map').setView([53, -4], 6);
 
 var addressPoints = allcoords
-console.dir(addressPoints.length)
+//var temp = JSON.stringify(addressPoints)
+//console.dir(addressPoints.length)
 
 var polygon = L.polygon([
     [51.509, -3.08],
@@ -42,26 +42,51 @@ var polygon = L.polygon([
 
 L.tileLayer('').addTo(map);
 
-var markers = L.markerClusterGroup();
 var polygons = L.layerGroup([polygon]);
 
 var ctrl = L.control.layers([]);
+
+/*
+const geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: "#ff7800",
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8,
+  };
+
+var lightData = L.geoJSON(addressPoints, {
+    onEachFeature: function(feature, layer) {
+        layer.bindPopup("<h1>"+feature.type+"</h1>")
+        latlng()
+    },
+    pointToLayer: function (feature, latlng) {
+        console.dir(latlng)
+        console.dir(1)
+      return L.circleMarker(new L.latlng(feature.coordinates[0], feature.coordinates[1]), geojsonMarkerOptions);
+    },
+  });
+*/
+var markers = L.markerClusterGroup();
+
+
+
 ctrl.addOverlay(markers, 'Pins');
 ctrl.addOverlay(polygons, 'Polygons');
 ctrl.addTo(map);
 
-    for (var i = 0; i < addressPoints.length; i++) {
+
+    for (var i = 0; i < allcoords.length; i++) {
         try {
-            for(var j = 0; j< addressPoints[i].length;j++){
-                var a = addressPoints[i][j];
-                var title = "point";
-                var marker = L.marker(new L.LatLng(a[0], a[1]), {
-                    title:title
-                });
-                marker.bindPopup(title);
-                markers.addLayer(marker);
-                map.addLayer(markers);
+            for(var j=0; j< allcoords[i].length;j++){
+                console.dir(allcoords[i][0][j])
+                var marker = new L.marker(new L.LatLng(allcoords[i][0][j], allcoords[i][0][j]));
+            //marker.bindPopup(title);
+            markers.addLayer(marker);
+            
             }
+            map.addLayer(markers);
         } catch(error) {
             console.dir(error)
         }
