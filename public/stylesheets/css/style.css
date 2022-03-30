@@ -174,11 +174,14 @@ tbody {
     color: white;
 }
 
-.input {
+.wrapper {
     display: flex;
-    justify-content: center;
     align-items: center;
-    /* Optional */
-    text-align: center;
-    margin: 0 auto;
+}
+
+.inp {
+    text-align-last: center;
+    margin: auto;
+    font-family: 'M PLUS 1', sans-serif;
+    font-weight: bold;
 }
