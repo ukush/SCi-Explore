@@ -64,8 +64,7 @@ var markers = L.markerClusterGroup();
             for(var j=0; j< allcoords[i].length;j++){
                 for(var k=0;k<allcoords[i][j].length;k++){
                     var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
-                    //var multi = L.multiPolygon(allcoords[i][j][k])
-                    //markers.addLayer(multi)
+                    //L.multiPolygon(new L.LatLng(allcoords[i][j][k])).addTo(markers)
                     markers.addLayer(marker);
                     
                 }
