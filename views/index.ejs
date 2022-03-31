@@ -8,7 +8,7 @@
     var data = <%-JSON.stringify(data)%>;
     var allcoords = []
     var json = []
-    console.dir(data[0][0])
+    //console.dir(data[0][0])
     for (var i=0;data[0].length;i++) {
         try {
             if (i == 118) {
@@ -24,7 +24,6 @@
         console.dir(error)
     }
     }
-    console.log(json[0])
 </script>
 <script>
     var map = L.map('map').setView([53, -4], 6);
@@ -43,14 +42,12 @@ const geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8,
   };
+  //if (json[i][2] != null){
+        //layer.bindPopup("<h1>"+json[i][2].name+"</h2><table><tr><td>ATOT:"+json[i][2].ATOT+"</td><td>ID:"+json[i][2].id+"</td></tr></table>")
 for(var i=0;i<json.length;i++){
     L.geoJSON(json[i], {
     onEachFeature: function(feature, layer) {
-        if (json[i][2] != null){
-        layer.bindPopup("<title>"+json[i][2].name+"</title><table><tr><td>"+json[i][2].ATOT+"</td><td>"+json[i][2].id+"</td></tr></table>")
-        } else {
-            layer.bindPopup("No metadata")
-        }
+            layer.bindPopup(feature)
     },
     pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, geojsonMarkerOptions);
@@ -65,24 +62,25 @@ var ctrl = L.control.layers([]);
 
 var markers = L.markerClusterGroup();
 
-
-    for (var i = 0; i < allcoords.length; i++) {
+console.dir(json[1])
+for (var x = 0; x < json.length; x++) {
+    //if(json[x][1]!=null){
+        console.dir("x:"+x)
         try {
-            for(var j=0; j< allcoords[i].length;j++){
-                for(var k=0;k<allcoords[i][j].length;k++){
-                    var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
+            for(var j=0; j<json[x][1].coordinates[0].length;j++){
+                console.dir("j:"+j)
+                for(var p=0;p<json[x][1].coordinates[0][j].length;p++){
+                    console.dir("p:"+p)
+                    var marker = new L.marker(new L.LatLng(json[x][1].coordinates[0][j][p][1], json[x][1].coordinates[0][j][p][0]));
                     //L.multiPolygon(new L.LatLng(allcoords[i][j][k])).addTo(markers)
                     markers.addLayer(marker);
-                    
+                    map.addLayer(markers)
                 }
-                map.addLayer(markers)
-            //marker.bindPopup(title);
-            //markers.addLayer(marker);
             }
-            //map.addLayer(group);
         } catch(error) {
             console.dir(error)
         }
+   //}
 }
 ctrl.addOverlay(markers, 'Pins');
 ctrl.addOverlay(polygons, 'Polygons');
