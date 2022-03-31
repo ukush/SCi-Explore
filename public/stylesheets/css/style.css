@@ -92,15 +92,6 @@ ul {
     float: left;
 }
 
-#metadata {
-    width: 30%;
-    float: right;
-}
-
-#metadata th {
-    width: 30%;
-}
-
 #results {
     width: 100%;
     height: 250px;
@@ -192,7 +183,7 @@ tbody {
     font-weight: bold;
 }
 
-td {
+#results td {
     white-space: nowrap;
     text-overflow:ellipsis;
     overflow: hidden;

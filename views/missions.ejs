@@ -56,11 +56,7 @@
     L.control.scale({ position: 'bottomleft' }).addTo(map)
     
     
-    // add coordinate mouse position
-    map.on('mousemove', function(e) {
-        var latlong = `+${e.latlng.lat.toFixed(10)} ${e.latlng.lng.toFixed(10)}`
-        $('#coordinates').html(latlong)
-    });
+    
     
     // add sci logo onto map as overlay
     L.Control.Watermark = L.Control.extend({
@@ -86,38 +82,7 @@
     </script>
 </div>
 
-<!--Create Mission Metadata (right-side of page)-->
-<div id="metadata" class="hidden">
-    <table class="table table-sm">
-        <thead class="thead-dark">
-            <tr>
-                <th colspan="2">Mission Metadata</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>Mission ID</th>
-                <td id="metMiss"></td>
-            </tr>
-            <tr>
-                <th>Coordinates</th>
-                <td id="metCoord"></td>
-            </tr>
-            <tr>
-                <th>File Size</th>
-                <td id="metFile"></td>
-            </tr>
-            <tr>
-                <th>Object Status</th>
-                <td id="metStatus"></td>
-            </tr>
-            <tr>
-                <th>Object Type</th>
-                <td id="metType"></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+
 <div id="scene" class="hidden">
     <table class="table table-sm">
         <thead class="thead-dark">
@@ -219,14 +184,11 @@
                 var rowSelected = table.getElementsByTagName('tr')[rowId];
                 rowSelected.style.backgroundColor = "cornflowerblue";
                 rowSelected.className += "selected";
-                var showMetaData = document.getElementById('metadata');
-                showMetaData.className -= "hidden";
+
                 var scene = document.getElementById('scene');
                 scene.className -= "hidden";
                 var mapShrink = document.getElementById('minimap');
                 mapShrink.className += " reduceSize";
-                var resultsShrink = document.getElementById('results');
-                resultsShrink.className += " reduceSize";
 
 
                 document.getElementById('metMiss').innerHTML = data[0][rowId][0].mId;
