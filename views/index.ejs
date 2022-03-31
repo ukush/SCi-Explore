@@ -34,6 +34,7 @@ var addressPoints = allcoords
 
 L.tileLayer('').addTo(map);
 var polygons = L.layerGroup();
+var markers = L.markerClusterGroup();
 
 const geojsonMarkerOptions = {
     radius: 8,
@@ -43,49 +44,45 @@ const geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8,
   };
+
 for(var i=0;i<json.length;i++){
     L.geoJSON(json[i], {
     onEachFeature: function(feature, layer) {
         if (json[i][2] != null){
-        layer.bindPopup("<title>"+json[i][2].name+"</title><table><tr><td>"+json[i][2].ATOT+"</td><td>"+json[i][2].id+"</td></tr></table>")
+        layer.bindPopup("<div><h1>"+json[i][2].name+
+            "</h2><table><tr><td>ATOT:"+json[i][2].ATOT+
+                "</td><td>mId:"+json[i][2].id+"</td></tr></table></div>")
+        //console.dir(feature)
         } else {
-            layer.bindPopup("No metadata")
+            layer.bindPopup("No metadata >:(")
         }
     },
     pointToLayer: function (feature, latlng) {
-      return L.circleMarker(latlng, geojsonMarkerOptions);
-    },
+      return L.marker(feature.coordinates, geojsonMarkerOptions);
+    }
   }).addTo(polygons);
 }
 
 var ctrl = L.control.layers([]);
 
-var markers = L.markerClusterGroup();
 
-
-    for (var i = 0; i < allcoords.length; i++) {
-        try {
-            for(var j=0; j< allcoords[i].length;j++){
-                var mark = []
-                for(var k=0;k<allcoords[i][j].length;k++){
-                    //var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
-                    mark.push([allcoords[i][j][k][1], allcoords[i][j][k][0])
-                    //var poly = new L.marker(new L.polygon())
-                    //L.multiPolygon(new L.LatLng(allcoords[i][j][k])).addTo(markers)
-                    
-                }
-                markers.addLayer(new L.marker(mark));
-                map.addLayer(markers)
-            //marker.bindPopup(title);
-            //markers.addLayer(marker);
+for (var i = 0; i < allcoords.length; i++) {
+    try {
+        //console.dir(allcoords[i][0][0][0])
+        for(var j=0; j< allcoords[i].length;j++){
+            var array = []
+            for(var k=0;k<allcoords[i][j].length;k++){
+                var marker = L.marker(new L.LatLng(allcoords[i][j][k][0][1], allcoords[i][j][k][0][0]))
             }
-            //map.addLayer(group);
+            markers.addLayer(marker)
+        }
         } catch(error) {
             console.dir(error)
         }
-}
-ctrl.addOverlay(markers, 'Pins');
-ctrl.addOverlay(polygons, 'Polygons');
+    }
+
+ctrl.addOverlay(markers, 'Coverage');
+ctrl.addOverlay(polygons, 'Missions');
 ctrl.addTo(map);
 
 //L.layerGroup(L.latlng)
