@@ -17,7 +17,6 @@ module.exports = (request, response, next) => {
             }  else {
                 request.session.authenticated = true;
                 request.session.access_token = res.access_token
-                //console.log(request.session.access_token)
                 next()
             }
         })
