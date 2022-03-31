@@ -100,6 +100,7 @@ ul {
 #results {
     width: 100%;
     height: 250px;
+    Overflow-y:scroll;
 }
 
 thead {
@@ -154,6 +155,7 @@ tbody {
     width: 30%;
     height: 100px;
     float: left;
+    position: relative;
 }
 
 .reduceSize {
@@ -192,3 +194,4 @@ td {
     overflow: hidden;
     max-width:1px;
 }
+

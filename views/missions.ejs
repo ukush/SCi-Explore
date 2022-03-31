@@ -21,7 +21,7 @@
         }
     </script>
     <script>
-    var map = L.map('minimap').setView([53, -4], 6);
+    var map = L.map('minimap').setView([54.5, -4], 5);
     //var temp = JSON.stringify(addressPoints)
     //console.dir(addressPoints.length)
     var addressPoints = allcoords
@@ -45,37 +45,10 @@
         pointToLayer: function (feature, latlng) {
           return L.circleMarker(latlng, geojsonMarkerOptions);
         },
-      }).addTo(polygons);
+      }).addTo(polygons);    
     
-    
-    
-    var ctrl = L.control.layers([]);
-    
-    var markers = L.markerClusterGroup();
-    
-    
-        for (var i = 0; i < allcoords.length; i++) {
-            try {
-                for(var j=0; j< allcoords[i].length;j++){
-                    for(var k=0;k<allcoords[i][j].length;k++){
-                        var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
-                        //var multi = L.multiPolygon(allcoords[i][j][k])
-                        //markers.addLayer(multi)
-                        markers.addLayer(marker);
-                        
-                    }
-                    map.addLayer(markers)
-                //marker.bindPopup(title);
-                //markers.addLayer(marker);
-                }
-                //map.addLayer(group);
-            } catch(error) {
-                console.dir(error)
-            }
-    }
-    ctrl.addOverlay(markers, 'Pins');
-    ctrl.addOverlay(polygons, 'Polygons');
-    ctrl.addTo(map);
+
+    polygons.addTo(map);
     
     //L.layerGroup(L.latlng)
     
@@ -124,31 +97,50 @@
         <tbody>
             <tr>
                 <th>Mission</th>
-                <td>MISS100055</td>
             </tr>
             <tr>
                 <th>Coordinates</th>
-                <td>53.2, -8.1</td>
             </tr>
             <tr>
                 <th>Date Created</th>
-                <td>10/01/2021</td>
             </tr>
             <tr>
                 <th>File Size</th>
-                <td>2.5Mb</td>
             </tr>
             <tr>
                 <th>Object Status</th>
-                <td>NEW</td>
             </tr>
             <tr>
                 <th>Object Type</th>
-                <td>MISSION</td>
             </tr>
         </tbody>
     </table>
 </div>
+<div id="scene" class="hidden">
+    <table class="table table-sm">
+        <thead class="thead-dark">
+            <tr>
+                <th colspan="4">Mission Scenes </th>
+            </tr>
+        </thead>
+        <tbody>
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Scene ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">First Frame Time</th>
+                    <th scope="col">Bands</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td></td>
+                </tr>
+            </tbody>
+    </table>
+</div>
+
 
 <!--Display Missions (bottom of page)-->
 <div id="results">
@@ -160,7 +152,6 @@
                 <th scope="col">Type</th>
                 <th scope="col">ATOT</th>
                 <th scope="col">Name</th>
-                <th scope="col">ID</th>
                 <th scope="col">Scenes</th>
             </tr>
         </thead>
@@ -173,11 +164,29 @@
                     <td><%= data[0][i][1].type %></td>
                     <% } %>
                     <% if(data[0][i][2] != null) { %>
-                    <td><%= data[0][i][2].id %></td>
-                    <td><%= data[0][i][2].ATOT %></td>
-                    <td><%= data[0][i][2].name %></td>
-                    <td><%= data[0][i][2].id %></td>
-                    <td><%= data[0][i][2].scenes %></td>
+
+                        <% if(data[0][i][2].ATOT != null) { %>
+                            <td><%= data[0][i][2].ATOT %></td>
+                        <% } else { %>
+                            <td></td>
+                        <% } %>
+
+                        <% if(data[0][i][2].name.length > 0) { %>
+                            <td><%= data[0][i][2].name %></td>
+                        <% } else { %>
+                            <td></td>
+                        <% } %>
+
+                        <% if(data[0][i][2].scenes.length > 0) { %>
+                            <td><%= data[0][i][2].scenes %></td>
+                        <% } else { %>
+                            <td></td>
+                        <% } %>
+ 
+                    <% } else { %>
+                    <td>NONE</td>
+                    <td>NONE</td>
+                    <td>NONE</td>
                     <% } %>
                 </tr>
                 <% }  %>
@@ -232,34 +241,6 @@
             });
         }
     </script>
-</div>
-
-<div id="scene" class="hidden">
-    <table class="table table-sm">
-        <thead class="thead-dark">
-            <tr>
-                <th colspan="3">Mission Scenes </th>
-            </tr>
-        </thead>
-        <tbody>
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Scene ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">First Frame Time</th>
-                    <th scope="col">Bands</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row"></th>
-                    <td>51.5, -0.5</td>
-                    <td>10/01/2021</td>
-                    <td></td>
-                </tr>
-            </tbody>
-    </table>
-
 </div>
 
 
