@@ -16,7 +16,7 @@
             }
         if(data[0][i][1] != null){
             let mid = data[0][i][1].coordinates
-            let temp = data[0][i][1]
+            let temp = data[0][i]
             json.push(temp)
             allcoords.push(mid)
         }
@@ -24,6 +24,7 @@
         console.dir(error)
     }
     }
+    console.log(json[0])
 </script>
 <script>
     var map = L.map('map').setView([53, -4], 6);
@@ -42,15 +43,21 @@ const geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8,
   };
-
-L.geoJSON(json, {
+for(var i=0;i<json.length;i++){
+    L.geoJSON(json[i], {
     onEachFeature: function(feature, layer) {
-        layer.bindPopup("<h1>"+feature.type+"</h1>")
+        if (json[i][2] != null){
+        layer.bindPopup("<title>"+json[i][2].name+"</title><table><tr><td>"+json[i][2].ATOT+"</td><td>"+json[i][2].id+"</td></tr></table>")
+        } else {
+            layer.bindPopup("No metadata")
+        }
     },
     pointToLayer: function (feature, latlng) {
       return L.circleMarker(latlng, geojsonMarkerOptions);
     },
   }).addTo(polygons);
+}
+
 
 
 
