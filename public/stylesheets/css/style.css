@@ -100,6 +100,7 @@ ul {
 #results {
     width: 100%;
     height: 250px;
+    Overflow-y:scroll;
 }
 
 thead {
@@ -154,6 +155,7 @@ tbody {
     width: 30%;
     height: 100px;
     float: left;
+    position: relative;
 }
 
 .reduceSize {
@@ -185,3 +187,11 @@ tbody {
     font-family: 'M PLUS 1', sans-serif;
     font-weight: bold;
 }
+
+td {
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    max-width:1px;
+}
+
