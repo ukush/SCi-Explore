@@ -96,24 +96,22 @@
         </thead>
         <tbody>
             <tr>
-                <th>Mission ID</th>
-                <td id="metMiss"></td>
+                <th>Mission</th>
             </tr>
             <tr>
                 <th>Coordinates</th>
-                <td id="metCoord"></td>
+            </tr>
+            <tr>
+                <th>Date Created</th>
             </tr>
             <tr>
                 <th>File Size</th>
-                <td id="metFile"></td>
             </tr>
             <tr>
                 <th>Object Status</th>
-                <td id="metStatus"></td>
             </tr>
             <tr>
                 <th>Object Type</th>
-                <td id="metType"></td>
             </tr>
         </tbody>
     </table>
@@ -133,10 +131,6 @@
                     <th scope="col">First Frame Time</th>
                     <th scope="col">Bands</th>
                 </tr>
-                    <td id = "sceneID"></td>
-                    <td id = "sceneName"></td>
-                    <td id = "sceneTime"></td>
-                    <td id = "sceneBands"></td>
             </thead>
             <tbody>
                 <tr>
@@ -202,11 +196,8 @@
         // Highlight table row on click
         var table = document.getElementById('mission');
         var cells = table.getElementsByTagName('td');
-        var i = 0;
-        for (i = 0; i < cells.length; i++) {
+        for (var i = 0; i < cells.length; i++) {
             var cell = cells[i];
-            console.log(data[0][i]);
-            i = i;
             cell.onclick = function() {
                 // Get the row id where the cell exists
                 var rowId = this.parentNode.rowIndex;
@@ -226,28 +217,7 @@
                 var mapShrink = document.getElementById('minimap');
                 mapShrink.className += " reduceSize";
                 var resultsShrink = document.getElementById('results');
-                resultsShrink.className += " reduceSize";
-
-
-                document.getElementById('metMiss').innerHTML = data[0][rowId][0].mId;
-                document.getElementById('metCoord').innerHTML = data[0][rowId][1].coordinates[0];    
-                document.getElementById('metFile').innerHTML = 
-                document.getElementById('metStatus').innerHTML = 
-                document.getElementById('metType').innerHTML = data[0][rowId][1].type;
-
-                //Need for loop to iterate through each scene
-                //Populate Scenes table
-                for (j = 0; j < data[0][j].length; j++) {
-                document.getElementById('sceneID').innerHTML = data[0][j][2].scenes[0].id;
-                document.getElementById('sceneName').innerHTML = data[0][j][2].name;
-                document.getElementById('sceneTime').innerHTML = data[0][j][2].scenes[0].firstFrameTime;
-                document.getElementById('sceneBands').innerHTML = data[0][j][2].scenes[0].bands[0].count;
-                }
-                
-                //document.getElementById('metDate').innerHTML = data[0][i][2].scenes[j].bands;
-                //console.dir(data[0][0][2].scenes[0].bands)
-
-                
+                resultsShrink.className += " reduceSize"
             }
         }
         for (var i = 0; i < table.rows.length; i++) {
@@ -258,6 +228,7 @@
                 for (var j = 1; j < 2; j++) {
                     msg += this.cells[j].innerHTML;
                     msgArray.push(msg)
+                    console.log(msg)
                 }
                 //Creates mission object, should be replaced with API data
                 var array = msgArray[0].split(",")
