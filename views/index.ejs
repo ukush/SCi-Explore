@@ -69,12 +69,15 @@ var markers = L.markerClusterGroup();
     for (var i = 0; i < allcoords.length; i++) {
         try {
             for(var j=0; j< allcoords[i].length;j++){
+                var mark = []
                 for(var k=0;k<allcoords[i][j].length;k++){
-                    var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
+                    //var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
+                    mark.push([allcoords[i][j][k][1], allcoords[i][j][k][0])
+                    //var poly = new L.marker(new L.polygon())
                     //L.multiPolygon(new L.LatLng(allcoords[i][j][k])).addTo(markers)
-                    markers.addLayer(marker);
                     
                 }
+                markers.addLayer(new L.marker(mark));
                 map.addLayer(markers)
             //marker.bindPopup(title);
             //markers.addLayer(marker);
