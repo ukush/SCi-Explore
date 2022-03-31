@@ -12,7 +12,6 @@ module.exports = (request, response, next) => {
         let data = { username, password }
         AUTH.Authorization(data, function(res) {
             if(!res.access_token) {
-                response.status(402).json({ error:"error, no access token generated... invalid login details"})
                 response.redirect("/login")
             }  else {
                 request.session.authenticated = true;
