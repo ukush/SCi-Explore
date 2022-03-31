@@ -185,3 +185,10 @@ tbody {
     font-family: 'M PLUS 1', sans-serif;
     font-weight: bold;
 }
+
+td {
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    max-width:1px;
+}

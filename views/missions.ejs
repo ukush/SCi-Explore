@@ -1,4 +1,117 @@
-<div id="minimap"></div>
+<div id="minimap">
+    <script>
+        var data = <%-JSON.stringify(data)%>;
+        var allcoords = []
+        var json = []
+        console.dir(data[0][0])
+        for (var i=0;data[0].length;i++) {
+            try {
+                if (i == 118) {
+                    break;
+                }
+            if(data[0][i][1] != null){
+                let mid = data[0][i][1].coordinates
+                let temp = data[0][i][1]
+                json.push(temp)
+                allcoords.push(mid)
+            }
+        } catch (error) {
+            console.dir(error)
+        }
+        }
+    </script>
+    <script>
+    var map = L.map('minimap').setView([53, -4], 6);
+    //var temp = JSON.stringify(addressPoints)
+    //console.dir(addressPoints.length)
+    var addressPoints = allcoords
+    
+    L.tileLayer('').addTo(map);
+    var polygons = L.layerGroup();
+    
+    const geojsonMarkerOptions = {
+        radius: 8,
+        fillColor: "#ff7800",
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8,
+      };
+    
+    L.geoJSON(json, {
+        onEachFeature: function(feature, layer) {
+            layer.bindPopup("<h1>"+feature.type+"</h1>")
+        },
+        pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, geojsonMarkerOptions);
+        },
+      }).addTo(polygons);
+    
+    
+    
+    var ctrl = L.control.layers([]);
+    
+    var markers = L.markerClusterGroup();
+    
+    
+        for (var i = 0; i < allcoords.length; i++) {
+            try {
+                for(var j=0; j< allcoords[i].length;j++){
+                    for(var k=0;k<allcoords[i][j].length;k++){
+                        var marker = new L.marker(new L.LatLng(allcoords[i][j][k][1], allcoords[i][j][k][0]));
+                        //var multi = L.multiPolygon(allcoords[i][j][k])
+                        //markers.addLayer(multi)
+                        markers.addLayer(marker);
+                        
+                    }
+                    map.addLayer(markers)
+                //marker.bindPopup(title);
+                //markers.addLayer(marker);
+                }
+                //map.addLayer(group);
+            } catch(error) {
+                console.dir(error)
+            }
+    }
+    ctrl.addOverlay(markers, 'Pins');
+    ctrl.addOverlay(polygons, 'Polygons');
+    ctrl.addTo(map);
+    
+    //L.layerGroup(L.latlng)
+    
+    // add map scale
+    L.control.scale({ position: 'bottomleft' }).addTo(map)
+    
+    
+    // add coordinate mouse position
+    map.on('mousemove', function(e) {
+        var latlong = `+${e.latlng.lat.toFixed(10)} ${e.latlng.lng.toFixed(10)}`
+        $('#coordinates').html(latlong)
+    });
+    
+    // add sci logo onto map as overlay
+    L.Control.Watermark = L.Control.extend({
+        onAdd: function(map) {
+            var img = L.DomUtil.create('img')
+            img.src = 'images/sci-logo.png'
+            img.style.width = '60px'
+            return img
+        },
+        onRemove: function(map) {}
+    });
+    
+    L.control.watermark = function(openstreetmap) {
+        return new L.Control.Watermark(openstreetmap)
+    }
+    
+    L.control.watermark({ position: 'bottomright' }).addTo(map)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetmap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map)
+    </script>
+</div>
 
 <!--Create Mission Metadata (right-side of page)-->
 <div id="metadata" class="hidden">
@@ -70,6 +183,55 @@
                 <% }  %>
         </tbody>
     </table>
+    <script>
+        // Highlight table row on click
+        var table = document.getElementById('mission');
+        var cells = table.getElementsByTagName('td');
+        for (var i = 0; i < cells.length; i++) {
+            var cell = cells[i];
+            cell.onclick = function() {
+                // Get the row id where the cell exists
+                var rowId = this.parentNode.rowIndex;
+                console.log(rowId);
+                var rowsNotSelected = table.getElementsByTagName('tr');
+                for (var row = 0; row < rowsNotSelected.length; row++) {
+                    rowsNotSelected[row].style.backgroundColor = "";
+                    rowsNotSelected[row].classList.remove('selected');
+                }
+                var rowSelected = table.getElementsByTagName('tr')[rowId];
+                rowSelected.style.backgroundColor = "cornflowerblue";
+                rowSelected.className += "selected";
+                var showMetaData = document.getElementById('metadata');
+                showMetaData.className -= "hidden";
+                var scene = document.getElementById('scene');
+                scene.className -= "hidden";
+                var mapShrink = document.getElementById('minimap');
+                mapShrink.className += " reduceSize";
+                var resultsShrink = document.getElementById('results');
+                resultsShrink.className += " reduceSize"
+            }
+        }
+        for (var i = 0; i < table.rows.length; i++) {
+            table.rows[i].addEventListener('click', function() {
+                //Get zoom location from 2nd column
+                var msg = '';
+                var msgArray = [];
+                for (var j = 1; j < 2; j++) {
+                    msg += this.cells[j].innerHTML;
+                    msgArray.push(msg)
+                    console.log(msg)
+                }
+                //Creates mission object, should be replaced with API data
+                var array = msgArray[0].split(",")
+                var a = parseFloat(array[0])+0.2
+                var b = parseFloat(array[1])
+                var newArray = []
+                newArray.push(b, a)
+                map.setView(newArray, 11);
+                console.log(a, b, newArray)
+            });
+        }
+    </script>
 </div>
 
 <div id="scene" class="hidden">
@@ -100,6 +262,5 @@
 
 </div>
 
-<script src=" ../minimap.js ">
-</script>
+
 <script src="../api.js "></script>
