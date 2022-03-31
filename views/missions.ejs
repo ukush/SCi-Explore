@@ -3,7 +3,7 @@
         var data = <%-JSON.stringify(data)%>;
         var allcoords = []
         var json = []
-        console.dir(data[0][0])
+        //console.dir(data[0][0])
         for (var i=0;data[0].length;i++) {
             try {
                 if (i == 118) {
@@ -98,15 +98,13 @@
                     <th scope="col">First Frame Time</th>
                     <th scope="col">Bands</th>
                 </tr>
-                    <td id = "sceneID"></td>
-                    <td id = "sceneName"></td>
-                    <td id = "sceneTime"></td>
-                    <td id = "sceneBands"></td>
             </thead>
             <tbody>
                 <tr>
-                    <th scope="row"></th>
-                    <td></td>
+                    <td id = "sceneID">A</td>
+                    <td id = "sceneName">B</td>
+                    <td id = "sceneTime">C</td>
+                    <td id = "sceneBands">D</td>
                 </tr>
             </tbody>
     </table>
@@ -171,11 +169,11 @@
         for (i = 0; i < cells.length; i++) {
             var cell = cells[i];
             console.log(data[0][i]);
-            i = i;
+            
             cell.onclick = function() {
                 // Get the row id where the cell exists
                 var rowId = this.parentNode.rowIndex;
-                console.log(rowId);
+                //console.log(rowId);
                 var rowsNotSelected = table.getElementsByTagName('tr');
                 for (var row = 0; row < rowsNotSelected.length; row++) {
                     rowsNotSelected[row].style.backgroundColor = "";
@@ -191,20 +189,28 @@
                 mapShrink.className += " reduceSize";
 
 
-                document.getElementById('metMiss').innerHTML = data[0][rowId][0].mId;
-                document.getElementById('metCoord').innerHTML = data[0][rowId][1].coordinates[0];    
-                document.getElementById('metFile').innerHTML = 
-                document.getElementById('metStatus').innerHTML = 
-                document.getElementById('metType').innerHTML = data[0][rowId][1].type;
-
+              
+              
                 //Need for loop to iterate through each scene
                 //Populate Scenes table
-                for (j = 0; j < data[0][j].length; j++) {
-                document.getElementById('sceneID').innerHTML = data[0][j][2].scenes[0].id;
-                document.getElementById('sceneName').innerHTML = data[0][j][2].name;
-                document.getElementById('sceneTime').innerHTML = data[0][j][2].scenes[0].firstFrameTime;
-                document.getElementById('sceneBands').innerHTML = data[0][j][2].scenes[0].bands[0].count;
+                console.log(data[0][rowId-1])
+        
+                if (data[0][rowId-1].length >= 3) {
+                    document.getElementById('sceneID').innerHTML = data[0][rowId-1][2].scenes[0].id;
+                    document.getElementById('sceneName').innerHTML = data[0][rowId-1][2].name;
+                    document.getElementById('sceneTime').innerHTML = data[0][rowId-1][2].scenes[0].firstFrameTime;
+                    document.getElementById('sceneBands').innerHTML = data[0][rowId-1][2].scenes[0].bands[0].count;
                 }
+                else {
+                    
+                    document.getElementById('sceneID').innerHTML = 'NO SCENE';
+                    document.getElementById('sceneName').innerHTML = 'NO SCENE';
+                    document.getElementById('sceneTime').innerHTML = 'NO SCENE';
+                    document.getElementById('sceneBands').innerHTML = 'NO SCENE';
+                }
+                
+                
+                
                 
                 //document.getElementById('metDate').innerHTML = data[0][i][2].scenes[j].bands;
                 //console.dir(data[0][0][2].scenes[0].bands)
@@ -228,7 +234,6 @@
                 var newArray = []
                 newArray.push(b, a)
                 map.setView(newArray, 11);
-                console.log(a, b, newArray)
             });
         }
     </script>

@@ -183,7 +183,7 @@ tbody {
     font-weight: bold;
 }
 
-#results td {
+#results td, #scene td {
     white-space: nowrap;
     text-overflow:ellipsis;
     overflow: hidden;
