@@ -192,4 +192,10 @@ tbody {
     font-weight: bold;
 }
 
+td {
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow: hidden;
+    max-width:1px;
+}
 
