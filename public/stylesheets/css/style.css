@@ -146,11 +146,19 @@ tbody {
     display: none;
 }
 
-#scene {
+#sceneHead {
     width: 30%;
-    height: 100px;
+    height: 60px;
     float: left;
     position: relative;
+}
+
+#scene {
+    width: 30%;
+    height: 340px;
+    float: left;
+    position: relative;
+    Overflow-y:scroll;
 }
 
 .reduceSize {
