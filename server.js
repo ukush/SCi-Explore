@@ -23,14 +23,11 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const app = express()
 
 // ------------------------ SESSION MANAGEMENT -----------------------//
-
-const cookieExpiry = 74787 * 1000 // get milliseconds
     // Make every request need a session/cookie
 app.use(session({
     secret: 'sci-toolset', // this should ideally be a randomly generated string (with sufficient entropy)
     resave: false, // option to resave 
     saveUninitialized: false,
-    //cookie: { maxAge: cookieExpiry }
 }))
 
 // ------------------------ SET UP VIEW ENGINE -----------------------//

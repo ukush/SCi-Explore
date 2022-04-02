@@ -1,16 +1,11 @@
-// import express
-const express = require('express')
+// ------------ Imports -------------------//
+
 const request = require('request')
-const bodyparser = require("body-parser")
-const url = require('url')
-const { raw } = require('body-parser')
 
-let urlencodedparser = bodyparser.urlencoded( { extended: false })
-
-// set up a router
-// the router works exactly the same as the app, it has http functions like get, post etc
-// use the router in the same way we use the app in the server.js
-
+//let urlencodedparser = bodyparser.urlencoded( { extended: false })
+//
+// class definition for data structuring
+//
 class Mission {
     constructor(mId, sId) {
         this.mId = mId
@@ -46,7 +41,9 @@ class Scenedata {
         return this.id
     }
 }
-
+//
+// --- Base function template for all api calls
+//
 function apiGet(path, access_token, response) {
     var options = {
         'method': 'GET',
@@ -62,7 +59,9 @@ function apiGet(path, access_token, response) {
         response(data)
     })
 }
-
+//
+// -- function to split and return the organised Mission objects into separate respectively defined arrays 
+//
 function JSONsplit(rawdata) {
     let missions = []
     let polys = []
@@ -72,20 +71,22 @@ function JSONsplit(rawdata) {
         polys.push(rawdata[0][i][1])
         metadata.push(rawdata[0][i][2])
     }
-    console.log(metadata)
     return splitdata
 }
-
+//
 //when user detailed have been validated coorectly and deemed valid this URL get is called
-//This collects all the data from the API
+//This collects all the data availbale from the API
+// *note - the api sends data in no specific order, data comes in at random
 function data_get(access_token) {
     return new Promise(resolve => 
         apiGet("/search", access_token, function(callback) {
+            //assigns api data to an array for iteration
             let array = callback.results
                 let struct_array = [];
                 for (let i=0;i<array.length;i++) {
                     let missionId = array[i].missionId
                     let sceneId = array[i].sceneId
+                    // sets the recieved mission and scene id object from api and sets it to the index of 
                     struct_array[i] = [new Mission(missionId, sceneId)]
                     apiGet(`/${missionId}/footprint`, access_token, function(callback) {
                         struct_array[i].push(new Poly(callback.type, callback.coordinates))

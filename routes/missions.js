@@ -18,6 +18,9 @@ let urlencodedparser = bodyparser.urlencoded({ extended: false })
 // use the router in the same way we use the app in the server.js
 const router = express.Router()
 
+//
+// GET -- executes when localhost:3000/x is accessed
+//
 router.get('/', (req, res) => {
     let access = req.session.access_token
     let data = API.data_get(access)
@@ -33,7 +36,6 @@ router.get('/create', (req, res) => {
     let data = API.data_get(access)
     data.then(
         function(data) {
-            //let organised_data = API.JSONsplit(data)
             res.render('createmission', { data: data })
         }
     )

@@ -5,37 +5,45 @@
 
 </div>
 <script>
+    //
+    // retrieves JSON data from backend and stores within a script variable for better access
+    //
     var data = <%-JSON.stringify(data)%>;
     var allcoords = []
     var json = []
-    console.dir(data[0][0])
+    console.dir(data[0].length)
     for (var i=0;data[0].length;i++) {
         try {
             if (i == 118) {
                 break;
             }
-        if(data[0][i][1] != null){
-            let mid = data[0][i][1].coordinates
-            let temp = data[0][i]
-            json.push(temp)
-            allcoords.push(mid)
+            if(data[0][i][1] != null){
+                let coords = data[0][i][1].coordinates
+                let jsonobject = data[0][i]
+                json.push(jsonobject)
+                allcoords.push(coords)
+            }
+        } catch (error) {
+            console.dir(error)
         }
-    } catch (error) {
-        console.dir(error)
     }
-    }
-    console.log(json[0])
 </script>
 <script>
-    var map = L.map('map').setView([53, -4], 6);
-//var temp = JSON.stringify(addressPoints)
-//console.dir(addressPoints.length)
+var map = L.map('map').setView([53, -4], 6);
+
+// defines the coordinate data
+
 var addressPoints = allcoords
 
 L.tileLayer('').addTo(map);
+//
+// defines map layers
+//
 var polygons = L.layerGroup();
 var markers = L.markerClusterGroup();
-
+// 
+// geojson missions formatting options
+//
 const geojsonMarkerOptions = {
     radius: 8,
     fillColor: "#ff7800",
@@ -44,7 +52,9 @@ const geojsonMarkerOptions = {
     opacity: 1,
     fillOpacity: 0.8,
   };
-
+//
+// -- Adds the mission layer containing all scenes
+//
 for(var i=0;i<json.length;i++){
     L.geoJSON(json[i], {
     onEachFeature: function(feature, layer) {
@@ -65,7 +75,9 @@ for(var i=0;i<json.length;i++){
 
 var ctrl = L.control.layers([]);
 
-
+// 
+// clusters all the coordinates onto the map
+//
 for (var i = 0; i < allcoords.length; i++) {
     try {
         //console.dir(allcoords[i][0][0][0])
@@ -80,12 +92,12 @@ for (var i = 0; i < allcoords.length; i++) {
             console.dir(error)
         }
     }
-
+//
+// map key toggle overlays
+//
 ctrl.addOverlay(markers, 'Coverage');
 ctrl.addOverlay(polygons, 'Missions');
 ctrl.addTo(map);
-
-//L.layerGroup(L.latlng)
 
 // add map scale
 L.control.scale({ position: 'bottomleft' }).addTo(map)
@@ -107,7 +119,9 @@ L.Control.Watermark = L.Control.extend({
     },
     onRemove: function(map) {}
 });
-
+//
+// - watermark addition to map
+//
 L.control.watermark = function(openstreetmap) {
     return new L.Control.Watermark(openstreetmap)
 }

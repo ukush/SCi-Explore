@@ -1,34 +1,42 @@
 <div id="minimap">
     <script>
+        //
+        // retrieves JSON data from backend and stores within a script variable for better access
+        //
         var data = <%-JSON.stringify(data)%>;
         var allcoords = []
         var json = []
-        //console.dir(data[0][0])
         for (var i=0;data[0].length;i++) {
             try {
                 if (i == 118) {
                     break;
                 }
-            if(data[0][i][1] != null){
-                let mid = data[0][i][1].coordinates
-                let temp = data[0][i][1]
-                json.push(temp)
-                allcoords.push(mid)
+                if(data[0][i][1] != null){
+                    let coords = data[0][i][1].coordinates
+                    let jsonobject = data[0][i][1]
+                    json.push(jsonobject)
+                    allcoords.push(coords)
+                }
+            } catch (error) {
+                console.dir(error)
             }
-        } catch (error) {
-            console.dir(error)
-        }
         }
     </script>
     <script>
     var map = L.map('minimap').setView([54.5, -4], 5);
-    //var temp = JSON.stringify(addressPoints)
-    //console.dir(addressPoints.length)
+    
+    // defines the coordinate data
+
     var addressPoints = allcoords
     
     L.tileLayer('').addTo(map);
+    //
+    // defines map layers
+    //
     var polygons = L.layerGroup();
-    
+    // 
+    // geojson missions formatting options
+    //
     const geojsonMarkerOptions = {
         radius: 8,
         fillColor: "#ff7800",
@@ -37,7 +45,9 @@
         opacity: 1,
         fillOpacity: 0.8,
       };
-    
+    //
+    // -- Adds the mission layer containing all scenes
+    //
     L.geoJSON(json, {
         onEachFeature: function(feature, layer) {
             layer.bindPopup("<h1>"+feature.type+"</h1>")
@@ -47,15 +57,14 @@
         },
       }).addTo(polygons);    
     
-
+    //
+    //adds layergroup to the map
+    //
     polygons.addTo(map);
     
-    //L.layerGroup(L.latlng)
     
     // add map scale
     L.control.scale({ position: 'bottomleft' }).addTo(map)
-    
-    
     
     
     // add sci logo onto map as overlay
@@ -72,7 +81,7 @@
     L.control.watermark = function(openstreetmap) {
         return new L.Control.Watermark(openstreetmap)
     }
-    
+    // add sci logo onto map as overlay
     L.control.watermark({ position: 'bottomright' }).addTo(map)
     L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetmap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -115,7 +124,7 @@
 </div>
 
 
-<!--Display Missions (bottom of page)-->
+<!--    Display Missions (bottom of page)-->
 <div id="results">
     <table class="table table-sm table-striped" id="mission">
         <thead class="thead-dark">
@@ -172,12 +181,10 @@
         var i = 0;
         for (i = 0; i < cells.length; i++) {
             var cell = cells[i];
-            //console.log(data[0][i]);
             
             cell.onclick = function() {
                 // Get the row id where the cell exists
                 var rowId = this.parentNode.rowIndex;
-                //console.log(rowId);
                 var rowsNotSelected = table.getElementsByTagName('tr');
                 for (var row = 0; row < rowsNotSelected.length; row++) {
                     rowsNotSelected[row].style.backgroundColor = "";
@@ -197,14 +204,11 @@
 
               
               
-                //Need for loop to iterate through each scene
-                //Populate Scenes table
-                console.log(data[0][rowId-1])
-        
+                //populates table with selected scenes frames
+                var table_
                 if (data[0][rowId-1].length >= 3) {
-                    var table_ = document.getElementById("scenes_table")
+                    table_ = document.getElementById("scenes_table")
                     var scene = data[0][rowId-1][2].scenes[0].bands[0].frames
-                    console.dir(scene)
                     for(var i=0;i<scene.length;i++) {
                         var row = ""
                         row = table_.insertRow(i);
@@ -217,14 +221,6 @@
                         cell3.innerHTML = data[0][rowId-1][2].scenes[0].bands[0].frames[i].productId
                         cell4.innerHTML = data[0][rowId-1][2].scenes[0].bands[0].frames[i].fileUrl
                     }
-                    
-
-                    // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
-                    
-                    //document.getElementById('sceneID').innerHTML = data[0][rowId-1][2].scenes[0].id;
-                    //document.getElementById('sceneName').innerHTML = data[0][rowId-1][2].name;
-                    //document.getElementById('sceneTime').innerHTML = data[0][rowId-1][2].scenes[0].firstFrameTime;
-                    //document.getElementById('sceneBands').innerHTML = data[0][rowId-1][2].scenes[0].bands[0].count;
                 }
                 else {
                     
@@ -233,13 +229,6 @@
                     document.getElementById('sceneTime').innerHTML = 'NO SCENE';
                     document.getElementById('sceneBands').innerHTML = 'NO SCENE';
                 }
-                
-                
-                
-                
-                //document.getElementById('metDate').innerHTML = data[0][i][2].scenes[j].bands;
-                //console.dir(data[0][0][2].scenes[0].bands)
-
                 
             }
         }
@@ -263,6 +252,5 @@
         }
     </script>
 </div>
-
 
 <script src="../api.js "></script>
