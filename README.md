@@ -1,6 +1,6 @@
 # SCi-Explore
 
-### Check our our app on [Heroku!](https://sci-toolset.herokuapp.com/)
+# Check our our app on [Heroku!](https://sci-toolset.herokuapp.com/)
 
 > Username: hallam
 > 
